@@ -1,5 +1,6 @@
 @startuml
 left to right direction
+User    <<operator>> as user
 Client    <<operator>> as client
 Admin    <<operator>> as admin
 
@@ -12,8 +13,8 @@ rectangle "Products Management" {
   (authentication) as auth
 }
 
-client --> listProducts
-client --> getDetails
+user --> listProducts
+user --> getDetails
 admin --> addProduct
 admin --> delProduct
 
@@ -23,4 +24,5 @@ addProduct ..> auth : <<include>>
 delProduct ..> auth : <<include>>
 
 admin -|> client
+client -|> user
 @enduml
