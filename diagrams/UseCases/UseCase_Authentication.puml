@@ -3,14 +3,12 @@
 left to right direction
 
 
-Admin    <<operator>> as admin
 User    <<operator>> as user
 
 rectangle "Authentication" {
   (Authenticate) as auth
 }
 
-admin --> auth
 user --> auth
 
 @enduml
