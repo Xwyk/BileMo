@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+left to right direction
+
+class User {
+  id : INTEGER
+  client_id : INTEGER
+  login : VARCHAR32
+  password : VARCHAR60
+}
+class Client{
+  id : INTEGER
+  name : VARCHAR32
+  description : LONGTEXT
+ }
+class Admin{
+  id : INTEGER
+  login : VARCHAR32
+  password : VARCHAR60
+}
+class Product{
+  id : INTEGER
+  admin_id : INTEGER
+  name : VARCHAR32
+  description : LONGTEXT
+}
+
+User::client_id *-- Client::id
+@enduml
