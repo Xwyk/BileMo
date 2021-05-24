@@ -1,7 +1,6 @@
 @startuml
 left to right direction
 User    <<operator>> as user
-Client    <<operator>> as client
 Admin    <<operator>> as admin
 
 
@@ -23,6 +22,5 @@ getDetails ..> auth : <<include>>
 addProduct ..> auth : <<include>>
 delProduct ..> auth : <<include>>
 
-admin -|> client
-client -|> user
+admin -|> user
 @enduml

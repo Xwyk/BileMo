@@ -4,7 +4,6 @@ left to right direction
 
 
 Admin    <<operator>> as admin
-Client    <<operator>> as client
 User    <<operator>> as user
 
 rectangle "Authentication" {
@@ -12,7 +11,6 @@ rectangle "Authentication" {
 }
 
 admin --> auth
-client --> auth
 user --> auth
 
 @enduml

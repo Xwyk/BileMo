@@ -3,20 +3,20 @@
 
 autonumber
 
-actor "Authenticated client" as client
+actor "Authenticated admin" as admin
 actor System                as system
 actor Database              as db
 
-client  -> system  : send HTTP DEL /clients/{clientId}/users/{userId}
+admin  -> system  : send HTTP DEL /clients/{clientId}/users/{userId}
 system -> db      : get User object from {userId}
 system <-- db     : return data
 
 alt User exists
   system -> db      : delete User object
   system <-- db     : return status code
-  client  <-- system : return 200 status code
+  admin  <-- system : return 200 status code
 else User doesn't exists
-  client  <-- system : return 404 status code
+  admin  <-- system : return 404 status code
 end
 
 @enduml
