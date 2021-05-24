@@ -23,7 +23,6 @@ class Client{
  }
 class Product{
   id : INTEGER
-  admin_id : INTEGER
   brand : VARCHAR32
   commercial_name : VARCHAR32
   model : VARCHAR32
@@ -36,6 +35,6 @@ class Product{
 }
 
 User::client_id "*" -- "1" Client::id : Belong to >
-Product::role_id "*" -- "1" Role::id : is >
+User::role_id "*" -- "1" Role::id : is >
 
 @enduml
