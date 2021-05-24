@@ -8,23 +8,29 @@ class User {
   client_id : INTEGER
   login : VARCHAR32
   password : VARCHAR60
+  created_at : DATETIME
 }
 class Client{
   id : INTEGER
   name : VARCHAR32
   description : LONGTEXT
+  created_at : DATETIME
  }
 class Admin{
   id : INTEGER
   login : VARCHAR32
   password : VARCHAR60
+  created_at : DATETIME
 }
 class Product{
   id : INTEGER
   admin_id : INTEGER
   name : VARCHAR32
   description : LONGTEXT
+  created_at : DATETIME
 }
 
-User::client_id *-- Client::id
+User::client_id "*" -- "1" Client::id : Belong to >
+Product::admin_id "*" -- "1" Admin::id : Created by >
+
 @enduml
