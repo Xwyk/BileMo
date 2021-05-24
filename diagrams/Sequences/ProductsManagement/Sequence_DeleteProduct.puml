@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated admin" as admin
+actor System                as system
+actor Database              as db
+
+admin  -> system  : send HTTP DEL /products/{id}
+system -> db      : get Product object from {idd}
+system <-- db     : return data
+
+alt Product exists
+  system -> db      : delete Product object
+  system <-- db     : return status code
+  admin  <-- system : return 200 status code
+else Product doesn't exists
+  admin  <-- system : return 404 status code
+end
+
+@enduml

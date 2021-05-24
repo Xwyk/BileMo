@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated client" as client
+actor System                as system
+actor Database              as db
+
+client  -> system  : send HTTP GET /clients/{id}/users
+system -> db      : request for users list
+system <-- db     : return data
+client  <-- system : return clients list in JSON
+
+@enduml

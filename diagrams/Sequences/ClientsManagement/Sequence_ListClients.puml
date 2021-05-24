@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated admin" as admin
+actor System                as system
+actor Database              as db
+
+admin  -> system  : send HTTP GET /clients
+system -> db      : request for clients list
+system <-- db     : return data
+alt Client exists
+  admin  <-- system : return clients list in JSON
+else Client doesn't exists
+  admin  <-- system : return 404 status code
+end
+
+@enduml

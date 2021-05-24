@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Authenticated user" as user
+actor System                as system
+actor Database              as db
+
+user  -> system  : send HTTP GET /products/{id}
+system -> db      : request for Product object from {id}
+system <-- db     : return data
+
+alt Product exists
+  user  <-- system : return product's details in JSON
+else Product doesn't exists
+  user  <-- system : return 404 status code
+end
+
+@enduml
