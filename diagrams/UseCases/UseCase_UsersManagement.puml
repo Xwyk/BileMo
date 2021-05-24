@@ -13,8 +13,8 @@ rectangle "Users Management" {
   (authentication) as auth
 }
 
-user --> addUser
-user --> delUser
+admin --> addUser
+admin --> delUser
 user --> showUser
 user --> listUsers
 
