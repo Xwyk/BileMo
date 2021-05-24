@@ -1,0 +1,18 @@
+@startuml
+
+left to right direction
+
+
+Admin    <<operator>> as admin
+Client    <<operator>> as client
+User    <<operator>> as user
+
+rectangle "Authentication" {
+  (Authenticate) as auth
+}
+
+admin --> auth
+client --> auth
+user --> auth
+
+@enduml

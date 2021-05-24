@@ -1,0 +1,28 @@
+@startuml
+
+left to right direction
+
+Client    <<operator>> as client
+Admin    <<operator>> as admin
+
+rectangle "Users Management" {
+  (Add user) as addUser
+  (Delete user) as delUser
+  (List users) as listUsers
+  (Show user details) as showUser
+  (authentication) as auth
+}
+
+client --> addUser
+client --> delUser
+client --> showUser
+client --> listUsers
+
+addUser ..> auth : <<include>>
+delUser ..> auth : <<include>>
+showUser ..> auth : <<include>>
+listUsers ..> auth : <<include>>
+
+admin -|> client
+
+@enduml

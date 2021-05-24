@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/component-diagram
+
+package "Application" {
+  [Products Management]
+  [Users Management]
+  [Clients Management]
+  [Authentication]
+}
+
+[Products Management] ..> [Authentication] : extends
+[Users Management] ..> [Authentication] : extends
+[Clients Management] ..> [Authentication] : extends
+
+@enduml
