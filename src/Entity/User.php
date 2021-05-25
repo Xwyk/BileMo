@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -21,12 +22,12 @@ class User
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $clientId;
+    private $client;
 
     /**
      * @ORM\Column(type="string", length=32)
      */
-    private $login;
+    private $username;
 
     /**
      * @ORM\Column(type="string", length=60)
@@ -38,36 +39,31 @@ class User
      */
     private $createdAt;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Role::class)
-     */
-    private $role;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClientId(): ?Client
+    public function getClient(): ?Client
     {
-        return $this->clientId;
+        return $this->client;
     }
 
-    public function setClientId(?Client $clientId): self
+    public function setClient(?Client $client): self
     {
-        $this->clientId = $clientId;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getLogin(): ?string
+    public function getUsername(): ?string
     {
-        return $this->login;
+        return $this->username;
     }
 
-    public function setLogin(string $login): self
+    public function setUsername(string $username): self
     {
-        $this->login = $login;
+        $this->username = $username;
 
         return $this;
     }
@@ -96,15 +92,18 @@ class User
         return $this;
     }
 
-    public function getRole(): ?Role
+    public function getRoles()
     {
-        return $this->role;
+        // TODO: Implement getRoles() method.
     }
 
-    public function setRole(?Role $role): self
+    public function getSalt()
     {
-        $this->role = $role;
+        // TODO: Implement getSalt() method.
+    }
 
-        return $this;
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }
