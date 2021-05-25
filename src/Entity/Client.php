@@ -35,7 +35,7 @@ class Client
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="clientId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="client", orphanRemoval=true)
      */
     private $users;
 
