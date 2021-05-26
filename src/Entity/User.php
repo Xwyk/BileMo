@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -15,6 +16,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"client_list_users"})
      */
     private $id;
 
@@ -26,6 +28,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=32)
+     * @Groups({"client_list_users", "user_list_details"})
      */
     private $username;
 
@@ -36,6 +39,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"client_list_users", "user_list_details"})
      */
     private $createdAt;
 
