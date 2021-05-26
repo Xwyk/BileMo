@@ -16,7 +16,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"client_list_users"})
+     * @Groups({"users_show_client_list"})
      */
     private $id;
 
@@ -28,7 +28,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=32)
-     * @Groups({"client_list_users", "user_list_details"})
+     * @Groups({"users_show_client_list", "user_show_detail"})
      */
     private $username;
 
@@ -39,7 +39,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"client_list_users", "user_list_details"})
+     * @Groups({"users_show_client_list", "user_show_detail"})
      */
     private $createdAt;
 

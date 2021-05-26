@@ -27,7 +27,7 @@ class UserController extends AbstractController
      * @ParamConverter("user", options={"mapping": {"userId" : "id"}})
      * @Rest\View(
      *     statusCode=200,
-     *     serializerGroups={"user_list_details"},
+     *     serializerGroups={"user_show_detail"},
      * )
      */
     public function showDetails(User $user): User
@@ -44,7 +44,7 @@ class UserController extends AbstractController
      * )
      * @Rest\View(
      *     statusCode=200,
-     *     serializerGroups={"client_list_users"},
+     *     serializerGroups={"users_show_client_list"},
      * )
      */
     public function showList(int $id, ClientRepository $clientRepository): object

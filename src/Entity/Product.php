@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -14,51 +15,61 @@ class Product
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"products_show_list"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=32)
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $brand;
 
     /**
      * @ORM\Column(type="string", length=32)
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $commercialName;
 
     /**
      * @ORM\Column(type="string", length=32)
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $model;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $rom;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $ram;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $battery;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $launchedAt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"products_show_list", "product_show_detail"})
      */
     private $price;
 
