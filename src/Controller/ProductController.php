@@ -16,7 +16,10 @@ class ProductController extends AbstractController
      *     name = "app_products_show_details",
      *     requirements = {"id"="\d+"}
      * )
-     * @Rest\View
+     * @Rest\View(
+     *     statusCode=200,
+     *     serializerGroups={"product_show_detail"},
+     * )
      */
     public function showDetails(Product $product): Product
     {
@@ -27,7 +30,10 @@ class ProductController extends AbstractController
      *     path = "/products",
      *     name = "app_products_show_list",
      * )
-     * @Rest\View
+     * @Rest\View(
+     *     statusCode=200,
+     *     serializerGroups={"products_show_list"},
+     * )
      */
     public function showList(): array
     {
