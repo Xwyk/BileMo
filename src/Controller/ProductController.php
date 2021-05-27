@@ -37,6 +37,6 @@ class ProductController extends AbstractController
      */
     public function showList(): array
     {
-        return $this->getDoctrine()->getRepository('App\Entity\Product')->findAll();
+        return $this->getDoctrine()->getRepository(Product::class)->findAll();
     }
 }

@@ -2,7 +2,7 @@
 
 left to right direction
 
-User    <<operator>> as user
+Client    <<operator>> as user
 Admin    <<operator>> as admin
 
 rectangle "Users Management" {
