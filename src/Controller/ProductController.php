@@ -47,27 +47,4 @@ class ProductController extends AbstractFOSRestController
     {
         return $this->getDoctrine()->getRepository(Product::class)->findAll();
     }
-
-    /**
-     * @Rest\Post(
-     *     path = "/products",
-     *     name = "app_products_add",
-     * )
-     * @Rest\View(
-     *     statusCode=201,
-     *     serializerGroups={"product_show_detail"},
-     * )
-     * @ParamConverter("product", class="App\Entity\Product", converter="fos_rest.request_body")
-     */
-    public function create(Product $product, ConstraintViolationList $violations, EntityManagerInterface $manager)
-    {
-        if(count($violations))  {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
-        }
-        dump($product); die;
-        $manager->persist($product);
-        $manager->flush();
-
-        return $product;
-    }
 }
