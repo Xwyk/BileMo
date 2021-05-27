@@ -29,3 +29,13 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\DataFixtures\ProductFixtures:
+        bind:
+            $json_file: '%kernel.project_dir%/src/DataFixtures/datas/products.json'
+    App\DataFixtures\ClientFixtures:
+        bind:
+            $json_file: '%kernel.project_dir%/src/DataFixtures/datas/clients.json'
+    App\DataFixtures\UserFixtures:
+        bind:
+            $json_file: '%kernel.project_dir%/src/DataFixtures/datas/users.json'
