@@ -74,14 +74,6 @@ class User
         return $this;
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
-    public function prePerist()
-    {
-        $this->createdAt = new \DateTime();
-    }
-
     public function getAddress(): ?Address
     {
         return $this->address;
@@ -92,5 +84,13 @@ class User
         $this->address = $address;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePerist()
+    {
+        $this->createdAt = new \DateTime();
     }
 }

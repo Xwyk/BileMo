@@ -128,7 +128,7 @@ class Client
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setClientId($this);
+            $user->setClient($this);
         }
 
         return $this;
@@ -138,8 +138,8 @@ class Client
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getClientId() === $this) {
-                $user->setClientId(null);
+            if ($user->getClient() === $this) {
+                $user->setClient(null);
             }
         }
 
