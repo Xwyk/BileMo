@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ExclusionPolicy("all")
  */
 class User implements UserInterface
 {
@@ -17,18 +20,21 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"users_show_client_list"})
+     * @Expose
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
      */
     private $client;
 
     /**
      * @ORM\Column(type="string", length=32)
      * @Groups({"users_show_client_list", "user_show_detail"})
+     * @Expose
      */
     private $username;
 
@@ -40,6 +46,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"users_show_client_list", "user_show_detail"})
+     * @Expose
      */
     private $createdAt;
 
