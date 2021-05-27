@@ -25,12 +25,12 @@ class Client{
 
 class Address{
   id : INTEGER
-  number : VARCHAR16
+  number : INTEGER
+  adverb : VARCHAR16
   street : VARCHAR64
   postal : INTEGER
   city : VARCHAR64
   country : VARCHAR64
-  user : INTEGER
 }
 
 class Product{

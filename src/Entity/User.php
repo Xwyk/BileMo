@@ -7,14 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks()
  */
-class User implements UserInterface
+class User
 {
     /**
      * @ORM\Id
@@ -34,23 +33,17 @@ class User implements UserInterface
     private $client;
 
     /**
-     * @ORM\Column(type="string", length=32)
-     * @Groups({"users_show_client_list", "user_show_detail"})
-     * @Expose
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=60)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="datetime", options={"default": "NOW"})
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      * @Groups({"users_show_client_list", "user_show_detail"})
      * @Expose
      */
     private $createdAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Address::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $address;
 
     public function getId(): ?int
     {
@@ -69,31 +62,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -106,27 +74,23 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
-    {
-        // TODO: Implement getRoles() method.
-    }
-
-    public function getSalt()
-    {
-        // TODO: Implement getSalt() method.
-    }
-
-    public function eraseCredentials()
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
-
-
     /**
      * @ORM\PrePersist()
      */
     public function prePerist()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
+
+        return $this;
     }
 }
