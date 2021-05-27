@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Client;
 use App\Entity\Product;
+use App\Repository\ClientRepository;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,8 +31,8 @@ class ClientController extends AbstractController
      * )
      * @Rest\View
      */
-    public function showList(): array
+    public function showList(ClientRepository $repo): array
     {
-        return $this->getDoctrine()->getRepository('App\Entity\Client')->findAll();
+        return $repo->findAll();
     }
 }

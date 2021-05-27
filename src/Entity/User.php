@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -28,6 +29,7 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      * @Expose
+     * @Groups({"user_show_detail"})
      */
     private $client;
 
@@ -44,7 +46,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "NOW"})
      * @Groups({"users_show_client_list", "user_show_detail"})
      * @Expose
      */
@@ -78,6 +80,7 @@ class User implements UserInterface
 
         return $this;
     }
+
 
     public function getPassword(): ?string
     {
@@ -116,5 +119,14 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePerist()
+    {
+        $this->createdAt = new \DateTime();
     }
 }
