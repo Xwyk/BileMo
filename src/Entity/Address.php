@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -18,31 +19,37 @@ class Address
     private $id;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $number;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=16, nullable=true)
      */
     private $adverb;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      */
     private $street;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string")
      */
     private $postal;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      */
     private $city;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      */
     private $country;
