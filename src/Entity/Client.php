@@ -9,10 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
  * @ExclusionPolicy("all")
+ * @UniqueEntity(
+ *     fields={"siren"},
+ *     message="ce siren est déjà connu"
+ * )
  */
 class Client
 {
