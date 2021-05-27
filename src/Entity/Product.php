@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
 
 /**
@@ -20,60 +21,67 @@ class Product
     private $id;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $brand;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $commercialName;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $model;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $rom;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $ram;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $battery;
 
     /**
+     * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $launchedAt;
 
     /**
+     * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $createdAt;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      */
     private $price;
-
-
 
     public function __construct()
     {

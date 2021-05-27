@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
@@ -40,10 +41,40 @@ class User
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Address::class)
+     * @Serializer\Type("App\Entity\Address")
+     * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
      */
     private $address;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     * @Expose
+     */
+    private $firstName;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     * @Expose
+     */
+    private $lastName;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     * @Expose
+     */
+    private $mailAddress;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @Expose
+     */
+    private $phone;
 
     public function getId(): ?int
     {
@@ -92,5 +123,53 @@ class User
     public function prePerist()
     {
         $this->createdAt = new \DateTime();
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getMailAddress(): ?string
+    {
+        return $this->mailAddress;
+    }
+
+    public function setMailAddress(string $mailAddress): self
+    {
+        $this->mailAddress = $mailAddress;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?int $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 }

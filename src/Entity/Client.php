@@ -6,6 +6,7 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -20,52 +21,62 @@ class Client
     private $id;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      */
     private $name;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
+     * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="client", orphanRemoval=true)
+     * @Serializer\Type("array<App\Entity\User>")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="client", orphanRemoval=true, cascade={"persist"})
      */
     private $users;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      */
     private $username;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Address::class)
+     * @Serializer\Type("App\Entity\Address")
+     * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $address;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      */
     private $siret;
 
     /**
+     * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      */
     private $siren;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=13)
      */
     private $tva;
@@ -119,7 +130,7 @@ class Client
     /**
      * @return Collection|User[]
      */
-    public function getUsers(): Collection
+    public function getUsers()
     {
         return $this->users;
     }
