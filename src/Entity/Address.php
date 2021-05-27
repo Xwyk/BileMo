@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -21,36 +22,42 @@ class Address
     /**
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"user_show_detail"})
      */
     private $number;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=16, nullable=true)
+     * @Groups({"user_show_detail"})
      */
     private $adverb;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_show_detail"})
      */
     private $street;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string")
+     * @Groups({"user_show_detail"})
      */
     private $postal;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_show_detail"})
      */
     private $city;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_show_detail"})
      */
     private $country;
 

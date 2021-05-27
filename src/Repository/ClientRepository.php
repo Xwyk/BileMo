@@ -47,4 +47,14 @@ class ClientRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOneBySiren(int $value): ?Client
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.siren = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
 }

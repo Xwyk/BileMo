@@ -29,7 +29,6 @@ class User
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      * @Expose
-     * @Groups({"user_show_detail"})
      */
     private $client;
 
@@ -44,6 +43,7 @@ class User
      * @Serializer\Type("App\Entity\Address")
      * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user_show_detail"})
      * @Expose
      */
     private $address;
@@ -51,6 +51,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_show_detail", "users_show_client_list"})
      * @Expose
      */
     private $firstName;
@@ -58,6 +59,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_show_detail", "users_show_client_list"})
      * @Expose
      */
     private $lastName;
@@ -65,6 +67,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user_show_detail", "users_show_client_list"})
      * @Expose
      */
     private $mailAddress;
@@ -72,6 +75,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Groups({"user_show_detail"})
      * @Expose
      */
     private $phone;
