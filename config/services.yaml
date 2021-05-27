@@ -36,6 +36,3 @@ services:
     App\DataFixtures\ClientFixtures:
         bind:
             $json_file: '%kernel.project_dir%/src/DataFixtures/datas/clients.json'
-    App\DataFixtures\UserFixtures:
-        bind:
-            $json_file: '%kernel.project_dir%/src/DataFixtures/datas/users.json'

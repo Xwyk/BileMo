@@ -3,10 +3,11 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use JMS\Serializer\SerializerBuilder;
 
-class ProductFixtures extends Fixture
+class ProductFixtures extends Fixture implements FixtureGroupInterface
 {
     private $jsonFile;
     public function __construct(string $json_file)
@@ -23,5 +24,10 @@ class ProductFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['all_fixtures', 'products_fixtures'];
     }
 }
