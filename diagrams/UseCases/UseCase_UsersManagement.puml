@@ -2,8 +2,7 @@
 
 left to right direction
 
-Client    <<operator>> as user
-Admin    <<operator>> as admin
+Client    <<operator>> as client
 
 rectangle "Users Management" {
   (Add user) as addUser
@@ -13,16 +12,14 @@ rectangle "Users Management" {
   (authentication) as auth
 }
 
-admin --> addUser
-admin --> delUser
-user --> showUser
-user --> listUsers
+client --> showUser
+client --> listUsers
+client --> addUser
+client --> delUser
 
-addUser ..> auth : <<include>>
-delUser ..> auth : <<include>>
 showUser ..> auth : <<include>>
 listUsers ..> auth : <<include>>
-
-admin -|> user
+addUser ..> auth : <<include>>
+delUser ..> auth : <<include>>
 
 @enduml

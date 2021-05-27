@@ -3,14 +3,14 @@
 
 autonumber
 
-actor "Authenticated admin" as admin
+actor "Authenticated client" as client
 actor System                as system
 actor Database              as db
 
-admin  -> system  : send HTTP POST /clients/{id}/users with JSON object
+client  -> system  : send HTTP POST /clients/{id}/users with JSON object
 system -> system  : create User object from JSON object
 system -> db      : Persist User object
 system <-- db     : return data
-admin  <-- system : return 201 status code
+client  <-- system : return 201 status code
 
 @enduml

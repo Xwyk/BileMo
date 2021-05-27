@@ -5,17 +5,34 @@ left to right direction
 
 class User {
   id : INTEGER
-  client_id : INTEGER
-  login : VARCHAR32
-  password : VARCHAR60
+  client : INTEGER
+  address : INTEGER
   created_at : DATETIME
 }
+
 class Client{
   id : INTEGER
+  login : VARCHAR32
+  password : VARCHAR60
   name : VARCHAR32
   description : LONGTEXT
+  address : INTEGER
+  siret : INTEGER
+  siren : INTEGER
+  tva : VARCHAR13
   created_at : DATETIME
- }
+}
+
+class Address{
+  id : INTEGER
+  number : VARCHAR16
+  street : VARCHAR64
+  postal : INTEGER
+  city : VARCHAR64
+  country : VARCHAR64
+  user : INTEGER
+}
+
 class Product{
   id : INTEGER
   brand : VARCHAR32
@@ -30,5 +47,7 @@ class Product{
 }
 
 User::client_id "*" -- "1" Client::id : Belong to >
+Client::address "*" -- "1" Address::id : domiciled at >
+User::address "*" -- "1" Address::id : domiciled at >
 
 @enduml
