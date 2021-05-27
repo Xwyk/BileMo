@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
+ * @ExclusionPolicy("all")
  */
 class Client
 {
@@ -17,24 +20,28 @@ class Client
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Expose
      */
     private $id;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
+     * @Expose
      */
     private $name;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Expose
      */
     private $description;
 
     /**
      * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
+     * @Expose
      */
     private $createdAt;
 
@@ -47,12 +54,14 @@ class Client
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Expose
      */
     private $username;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
+     * @Expose
      */
     private $password;
 
@@ -60,24 +69,28 @@ class Client
      * @Serializer\Type("App\Entity\Address")
      * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
      */
     private $address;
 
     /**
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
+     * @Expose
      */
     private $siret;
 
     /**
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
+     * @Expose
      */
     private $siren;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=13)
+     * @Expose
      */
     private $tva;
 
