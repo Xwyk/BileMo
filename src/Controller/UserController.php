@@ -101,6 +101,6 @@ class UserController extends AbstractFOSRestController
         }
         $manager->remove($user);
         $manager->flush();
-        return $this->view("", Response::HTTP_OK);
+        return $this->view("OK", Response::HTTP_OK);
     }
 }
