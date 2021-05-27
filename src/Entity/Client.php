@@ -15,8 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass=ClientRepository::class)
  * @ExclusionPolicy("all")
  * @UniqueEntity(
- *     fields={"siren"},
- *     message="ce siren est déjà connu"
+ *     fields={"siren, siret, tva"},
  * )
  */
 class Client
@@ -53,6 +52,7 @@ class Client
     /**
      * @Serializer\Type("array<App\Entity\User>")
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="client", orphanRemoval=true, cascade={"persist"})
+     * @Expose
      */
     private $users;
 
@@ -148,7 +148,7 @@ class Client
     /**
      * @return Collection|User[]
      */
-    public function getUsers()
+    public function getUsers(): Collection
     {
         return $this->users;
     }

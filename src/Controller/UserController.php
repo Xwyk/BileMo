@@ -11,35 +11,40 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
     /**
      * @Rest\Get(
-     *     path = "/clients/{clientId}/users/{userId}",
+     *     path = "/clients/{siren}/users/{userId}",
      *     name = "app_user_show_details",
      *     requirements = {
-     *         "clientId"="\d+",
+     *         "siren"="\d+",
      *         "userId"="\d+"
      *     },
      * )
+     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
      * @ParamConverter("user", options={"mapping": {"userId" : "id"}})
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"user_show_detail"},
      * )
      */
-    public function showDetails(User $user): User
+    public function showDetails(User $user, Client $client): User
     {
+        if (!$client->getUsers()->contains($user)){
+            throw new BadRequestHttpException('Unknown user for this client');
+        }
         return $user;
     }
     /**
      * @Rest\Get(
-     *     path = "/clients/{id}/users",
+     *     path = "/clients/{siren}/users",
      *     name = "app_client_show_users",
      *     requirements = {
-     *         "id"="\d+"
+     *         "siren"="\d+"
      *     },
      * )
      * @Rest\View(
@@ -47,8 +52,8 @@ class UserController extends AbstractController
      *     serializerGroups={"users_show_client_list"},
      * )
      */
-    public function showList(int $id, ClientRepository $clientRepository): object
+    public function showList(int $siren, ClientRepository $clientRepository): object
     {
-        return $clientRepository->findOneById($id)->getUsers();
+        return $clientRepository->findOneBySiren($siren)->getUsers();
     }
 }
