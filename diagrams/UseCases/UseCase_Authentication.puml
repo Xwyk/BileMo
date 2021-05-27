@@ -3,12 +3,12 @@
 left to right direction
 
 
-User    <<operator>> as user
+Client    <<operator>> as client
 
 rectangle "Authentication" {
   (Authenticate) as auth
 }
 
-user --> auth
+client --> auth
 
 @enduml

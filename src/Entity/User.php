@@ -4,40 +4,77 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ExclusionPolicy("all")
+ * @ORM\HasLifecycleCallbacks()
  */
-class User implements UserInterface
+class User
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"users_show_client_list"})
+     * @Expose
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Expose
+     * @Groups({"user_show_detail"})
      */
     private $client;
 
     /**
-     * @ORM\Column(type="string", length=32)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=60)
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @Groups({"users_show_client_list", "user_show_detail"})
+     * @Expose
      */
     private $createdAt;
+
+    /**
+     * @Serializer\Type("App\Entity\Address")
+     * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @Expose
+     */
+    private $address;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     * @Expose
+     */
+    private $firstName;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     * @Expose
+     */
+    private $lastName;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     * @Expose
+     */
+    private $mailAddress;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=20, nullable=true)
+     * @Expose
+     */
+    private $phone;
 
     public function getId(): ?int
     {
@@ -56,30 +93,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -92,18 +105,71 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getAddress(): ?Address
     {
-        // TODO: Implement getRoles() method.
+        return $this->address;
     }
 
-    public function getSalt()
+    public function setAddress(?Address $address): self
     {
-        // TODO: Implement getSalt() method.
+        $this->address = $address;
+
+        return $this;
     }
 
-    public function eraseCredentials()
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePerist()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->createdAt = new \DateTime();
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getMailAddress(): ?string
+    {
+        return $this->mailAddress;
+    }
+
+    public function setMailAddress(string $mailAddress): self
+    {
+        $this->mailAddress = $mailAddress;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?int $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 }

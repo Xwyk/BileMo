@@ -3,13 +3,13 @@
 
 autonumber
 
-actor "Authenticated admin" as admin
+actor "Authenticated client" as client
 actor System                as system
 actor Database              as db
 
-admin  -> system  : send HTTP GET /clients/{id}/users
+client  -> system  : send HTTP GET /clients/{id}/users
 system -> db      : request for users list
 system <-- db     : return data
-admin  <-- system : return clients list in JSON
+client  <-- system : return clients list in JSON
 
 @enduml

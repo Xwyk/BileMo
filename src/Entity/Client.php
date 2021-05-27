@@ -6,6 +6,7 @@ use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -20,24 +21,65 @@ class Client
     private $id;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      */
     private $name;
 
     /**
+     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $description;
 
     /**
+     * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="clientId", orphanRemoval=true)
+     * @Serializer\Type("array<App\Entity\User>")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="client", orphanRemoval=true, cascade={"persist"})
      */
     private $users;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     */
+    private $username;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @Serializer\Type("App\Entity\Address")
+     * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $address;
+
+    /**
+     * @Serializer\Type("integer")
+     * @ORM\Column(type="integer")
+     */
+    private $siret;
+
+    /**
+     * @Serializer\Type("integer")
+     * @ORM\Column(type="integer")
+     */
+    private $siren;
+
+    /**
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=13)
+     */
+    private $tva;
 
     public function __construct()
     {
@@ -88,7 +130,7 @@ class Client
     /**
      * @return Collection|User[]
      */
-    public function getUsers(): Collection
+    public function getUsers()
     {
         return $this->users;
     }
@@ -97,7 +139,7 @@ class Client
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setClientId($this);
+            $user->setClient($this);
         }
 
         return $this;
@@ -107,10 +149,82 @@ class Client
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getClientId() === $this) {
-                $user->setClientId(null);
+            if ($user->getClient() === $this) {
+                $user->setClient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getSiret(): ?int
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(int $siret): self
+    {
+        $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getSiren(): ?int
+    {
+        return $this->siren;
+    }
+
+    public function setSiren(int $siren): self
+    {
+        $this->siren = $siren;
+
+        return $this;
+    }
+
+    public function getTva(): ?string
+    {
+        return $this->tva;
+    }
+
+    public function setTva(string $tva): self
+    {
+        $this->tva = $tva;
 
         return $this;
     }

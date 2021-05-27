@@ -1,0 +1,35 @@
+[
+  {
+    "brand": "Huawei",
+    "commercial_name": "b",
+    "model": "b",
+    "rom": 12,
+    "ram": 12,
+    "battery": 12,
+    "launched_at": "2021-05-27T15:15:00+00:00",
+    "created_at": "2021-05-27T15:15:00+00:00",
+    "price": 200
+  },
+  {
+    "brand": "Huawei",
+    "commercial_name": "c",
+    "model": "c",
+    "rom": 12,
+    "ram": 12,
+    "battery": 12,
+    "launched_at": "2021-05-27T15:15:00+00:00",
+    "created_at": "2021-05-27T15:15:00+00:00",
+    "price": 200
+  },
+  {
+    "brand": "Huawei",
+    "commercial_name": "d",
+    "model": "d",
+    "rom": 12,
+    "ram": 12,
+    "battery": 12,
+    "launched_at": "2021-05-27T15:15:00+00:00",
+    "created_at": "2021-05-27T15:15:00+00:00",
+    "price": 200
+  }
+]

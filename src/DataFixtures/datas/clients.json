@@ -1,0 +1,35 @@
+[
+  {
+    "name": "E.Leclerc",
+    "description": "Commerce de détail",
+    "created_at": "2021-05-07T10:30:00+00:00",
+    "users": [
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": 44860,
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0605410616"
+      }
+    ],
+    "username": "florian",
+    "password": "florian",
+    "address": {
+      "number": 4,
+      "adverb": null,
+      "street": "Rue des vignerons",
+      "postal": 44860,
+      "city": "Pont-Saint-Martin",
+      "country": "France"
+    },
+    "siret": 1222,
+    "siren": 1222,
+    "tva": "1222"
+  }
+]
