@@ -18,11 +18,10 @@ class ProductFixtures extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager)
     {
         $serializer = SerializerBuilder::create()->build();
-        $array = $serializer->deserialize(file_get_contents($this->jsonFile),'array<App\Entity\Product>', 'json');
-        foreach ($array as $product){
+        $products = $serializer->deserialize(file_get_contents($this->jsonFile),'array<App\Entity\Product>', 'json');
+        foreach ($products as $product){
             $manager->persist($product);
         }
-
         $manager->flush();
     }
 

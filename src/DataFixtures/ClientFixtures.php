@@ -18,14 +18,11 @@ class ClientFixtures extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager)
     {
         $serializer = SerializerBuilder::create()->build();
-        $array = $serializer->deserialize(file_get_contents($this->jsonFile),'array<App\Entity\Client>', 'json');
-        dump($array);
-        foreach ($array as $client){
+        $users = $serializer->deserialize(file_get_contents($this->jsonFile),'array<App\Entity\Client>', 'json');
+        foreach ($users as $client){
             foreach ($client->getUsers() as $user){
                 $user->setClient($client);
             }
-            dump($array);
-
             $manager->persist($client);
         }
 
