@@ -38,7 +38,7 @@ class UserController extends AbstractFOSRestController
     public function showDetails(User $user, Client $client): User
     {
         if (!$client->getUsers()->contains($user)){
-            throw new BadRequestHttpException('Unknown user for this client');
+            return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
         }
         return $user;
     }
@@ -102,7 +102,7 @@ class UserController extends AbstractFOSRestController
     public function delete(User $user, Client $client, EntityManagerInterface $manager)
     {
         if (!$client->getUsers()->contains($user)){
-            throw new BadRequestHttpException('Unknown user for this client');
+            return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
         }
         $manager->remove($user);
         $manager->flush();
