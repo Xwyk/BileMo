@@ -15,6 +15,32 @@ use Symfony\Component\Validator\ConstraintViolationList;
 class UserController extends AbstractFOSRestController
 {
     /**
+     * @Rest\Post(
+     *     path = "/clients/{siren}/users",
+     *     name = "app_client_add_user",
+     *     requirements = {
+     *         "siren"="\d+",
+     *     },
+     * )
+     * @Rest\View(
+     *     statusCode=201,
+     *     serializerGroups={"user_show_detail"},
+     * )
+     * @ParamConverter("user", class="App\Entity\User", converter="fos_rest.request_body")
+     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
+     */
+    public function create(User $user, Client $client, ConstraintViolationList $violations, EntityManagerInterface $manager)
+    {
+        if(count($violations))  {
+            return $this->view($violations, Response::HTTP_BAD_REQUEST);
+        }
+        $client->addUser($user);
+        $manager->persist($user);
+        $manager->flush();
+
+        return $user;
+    }
+    /**
      * @Rest\Get(
      *     path = "/clients/{siren}/users/{userId}",
      *     name = "app_user_show_details",
@@ -37,6 +63,7 @@ class UserController extends AbstractFOSRestController
         }
         return $user;
     }
+
     /**
      * @Rest\Get(
      *     path = "/clients/{siren}/users",
@@ -53,33 +80,6 @@ class UserController extends AbstractFOSRestController
     public function showList(int $siren, ClientRepository $clientRepository): object
     {
         return $clientRepository->findOneBySiren($siren)->getUsers();
-    }
-
-    /**
-     * @Rest\Post(
-     *     path = "/clients/{siren}/users",
-     *     name = "app_client_add_user",
-     *     requirements = {
-     *         "siren"="\d+",
-     *     },
-     * )
-     * @Rest\View(
-     *     statusCode=201,
-     *     serializerGroups={"user_show_detail"},
-     * )
-     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
-     * @ParamConverter("user", class="App\Entity\User", converter="fos_rest.request_body")
-     */
-    public function create(User $user, Client $client, ConstraintViolationList $violations, EntityManagerInterface $manager)
-    {
-        if(count($violations))  {
-            return $this->view($violations, Response::HTTP_BAD_REQUEST);
-        }
-        $client->addUser($user);
-        $manager->persist($user);
-        $manager->flush();
-
-        return $user;
     }
 
     /**
