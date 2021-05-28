@@ -8,7 +8,7 @@
         "address": {
           "number": 4,
           "street": "Rue des vignerons",
-          "postal": 44860,
+          "postal": "44860",
           "city": "Pont-Saint-Martin",
           "country": "France"
         },

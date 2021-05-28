@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Entity\User;
 use App\Repository\ClientRepository;
 use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -43,16 +44,16 @@ class UserControllerTest extends WebTestCase
         $data = array
         (
             "address"  => [
-                "number" => 4,
-                "street" => "Rue des Vignerons",
-                "postal" => "44860",
-                "city"   => "Pont-Saint-Martin",
+                "number"=> 4,
+                "street"=> "Rue des vignerons",
+                "postal"=> "44860",
+                "city"=> "Pont-Saint-Martin",
                 "country"=> "France"
             ],
-            "first_name"  => "Florian",
-            "last_name" => "LEBOUL",
-            "mail_address"  => "phpunit@test.com",
-            "phone"  => "0605410616",
+            "first_name"=> "Florian",
+            "last_name"=> "LEBOUL",
+            "mail_address"=> "phpunit@test.com",
+            "phone"=> "0605410616"
         );
         $client = self::createClient();
         $firstClient = $this->getFirstClient();
@@ -63,19 +64,7 @@ class UserControllerTest extends WebTestCase
             [],
             [],
             ['CONTENT_TYPE' => 'application/json'],
-            "{
-                        'address': {
-                          'number': 4,
-                          'street': 'Rue des vignerons',
-                          'postal': 44860,
-                          'city': 'Pont-Saint-Martin',
-                          'country': 'France'
-                        },
-                        'first_name': 'Florian',
-                        'last_name': 'LEBOUL',
-                        'mail_address': 'phpunit@test.com',
-                        'phone': '0605410616'
-                      }"
+            json_encode($data)
         );
         $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
         $this->assertEquals('Florian', $this->getCreatedUser()->getFirstName());
@@ -83,7 +72,15 @@ class UserControllerTest extends WebTestCase
 
     public function testDelete(): void
     {
-
+        $client = self::createClient();
+        $firstClient = $this->getFirstClient();
+        $firstClientSiren = $firstClient->getSiren();
+        $firstUserId =  $this->getCreatedUser()->getId();
+        $client->request(
+            'DELETE',
+            "/clients/".$firstClientSiren."/users/".$firstUserId
+        );
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
     private function getFirstClient(): Client
@@ -96,10 +93,10 @@ class UserControllerTest extends WebTestCase
 
     private function getCreatedUser(): User
     {
-        return (static::$container->get(ClientRepository::class)->createQueryBuilder('c')
-            ->andWhere('c.mail_address = :val')
+        return (static::$container->get(UserRepository::class)->createQueryBuilder('c')
+            ->andWhere('c.mailAddress = :val')
             ->setParameter('val', 'phpunit@test.com')
             ->getQuery()
-            ->getOneOrNullResult());
+            ->getResult())[0];
     }
 }
