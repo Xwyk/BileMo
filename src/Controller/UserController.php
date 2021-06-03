@@ -8,6 +8,7 @@ use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\View\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,7 @@ class UserController extends AbstractFOSRestController
      * )
      * @ParamConverter("user", class="App\Entity\User", converter="fos_rest.request_body")
      * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
+     * @IsGranted("USER_ADD")
      */
     public function create(User $user, Client $client, ConstraintViolationList $violations, EntityManagerInterface $manager)
     {
@@ -81,7 +83,7 @@ class UserController extends AbstractFOSRestController
      *     serializerGroups={"users_show_client_list"},
      * )
      *
-     * @IsGranted("USER_PERSONAL_LIST")
+     * @IsGranted("USERS_LIST")
      */
     public function showList(Client $client): object
     {
@@ -100,8 +102,9 @@ class UserController extends AbstractFOSRestController
      * )
      * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
      * @ParamConverter("user", options={"mapping": {"userId" : "id"}})
+     * @IsGranted("USER_DELETE", subject="user")
      */
-    public function delete(User $user, Client $client, EntityManagerInterface $manager)
+    public function delete(User $user, Client $client, EntityManagerInterface $manager): View
     {
         if (!$client->getUsers()->contains($user)){
             return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
