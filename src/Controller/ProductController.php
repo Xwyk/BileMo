@@ -24,6 +24,7 @@ class ProductController extends AbstractFOSRestController
      *     statusCode=200,
      *     serializerGroups={"product_show_detail"},
      * )
+     * @IsGranted("PRODUCT_SHOW")
      */
     public function showDetails(Product $product): Product
     {
@@ -41,7 +42,7 @@ class ProductController extends AbstractFOSRestController
      *     statusCode=200,
      *     serializerGroups={"products_show_list"},
      * )
-     *
+     * @IsGranted("PRODUCTS_LIST")
      */
     public function showList(): array
     {
