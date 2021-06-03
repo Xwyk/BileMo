@@ -11,21 +11,12 @@ security:
             security: false
         main:
             lazy: false
-            logout: ~
-            provider: database_users
-            stateless: true
-            guard:
-                authenticators:
-                    - App\Security\APIAuthenticator
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+#            logout: ~
+#            provider: database_users
+#            stateless: true
+#            guard:
+#                authenticators:
+#                    - App\Security\APIAuthenticator
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/products, roles: ROLE_USER }
+         - { path: ^/, roles: ROLE_ADMIN }

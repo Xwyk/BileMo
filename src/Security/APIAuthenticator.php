@@ -64,6 +64,7 @@ class APIAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null): JsonResponse
     {
+        dd("bite");
         $data = [
             'message' => 'Authentication Required'
         ];
