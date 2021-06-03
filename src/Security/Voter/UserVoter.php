@@ -43,7 +43,7 @@ class UserVoter extends Voter
                 if (!$subject instanceof User) {
                     return false;
                 }
-                return $subject->getClient() !== $client;
+                return $subject->getClient() === $client;
             case self::USER_ADD:
             case self::USERS_LIST:
                 return true;
