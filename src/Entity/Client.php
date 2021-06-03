@@ -68,7 +68,7 @@ class Client implements UserInterface
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", unique=true, length=255)
-     * @NotNull
+     *
      */
     private $apiToken;
 
@@ -252,7 +252,6 @@ class Client implements UserInterface
     public function setTva(string $tva): self
     {
         $this->tva = $tva;
-
         return $this;
     }
 

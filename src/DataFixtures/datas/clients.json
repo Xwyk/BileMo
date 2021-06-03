@@ -19,6 +19,7 @@
       }
     ],
     "username": "florian",
+    "apiToken": "123456",
     "password": "florian",
     "address": {
       "number": 4,

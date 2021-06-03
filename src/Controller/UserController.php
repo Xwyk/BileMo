@@ -8,6 +8,7 @@ use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -55,12 +56,13 @@ class UserController extends AbstractFOSRestController
      *     statusCode=200,
      *     serializerGroups={"user_show_detail"},
      * )
+     * @IsGranted("USER_SHOW", subject="user")
      */
     public function showDetails(User $user, Client $client): User
     {
-        if (!$client->getUsers()->contains($user)){
-            return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
-        }
+//        if (!$client->getUsers()->contains($user)){
+//            return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
+//        }
         return $user;
     }
 
@@ -72,14 +74,19 @@ class UserController extends AbstractFOSRestController
      *         "siren"="\d+"
      *     },
      * )
+     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
+
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"users_show_client_list"},
      * )
+     *
+     * @IsGranted("USER_PERSONAL_LIST")
      */
-    public function showList(int $siren, ClientRepository $clientRepository): object
+    public function showList(Client $client): object
     {
-        return $clientRepository->findOneBySiren($siren)->getUsers();
+        // TODO exception null
+        return $client->getUsers();
     }
 
     /**

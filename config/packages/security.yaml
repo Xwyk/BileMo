@@ -11,12 +11,12 @@ security:
             security: false
         main:
             lazy: false
-#            logout: ~
-#            provider: database_users
-#            stateless: true
-#            guard:
-#                authenticators:
-#                    - App\Security\APIAuthenticator
+            logout: ~
+            provider: database_users
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\APIAuthenticator
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/, roles: ROLE_ADMIN }
+#         - { path: ^/, roles: ROLE_USER }
