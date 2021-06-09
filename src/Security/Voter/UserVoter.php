@@ -9,10 +9,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserVoter extends Voter
 {
-    const USERS_LIST = "USERS_LIST";
-    const USER_ADD = "USER_ADD";
+    const USERS_LIST  = "USERS_LIST";
+    const USER_ADD    = "USER_ADD";
     const USER_DELETE = "USER_DELETE";
-    const USER_SHOW = "USER_SHOW";
+    const USER_SHOW   = "USER_SHOW";
 
 
     protected function supports(string $attribute, $subject): bool
@@ -43,6 +43,7 @@ class UserVoter extends Voter
                 if (!$subject instanceof User) {
                     return false;
                 }
+                // return if user's client is connected client
                 return $subject->getClient() === $client;
             case self::USER_ADD:
             case self::USERS_LIST:
