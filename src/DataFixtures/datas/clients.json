@@ -18,9 +18,8 @@
         "phone": "0605410616"
       }
     ],
-    "username": "florian",
-    "apiToken": "123456",
-    "password": "florian",
+    "username": "user1",
+    "password": "$2y$10$w9SrHWXNEAvK/rvw0ldNceQo5lQJ9mJjd6p/mUiLi36D1pdhmrtDm",
     "address": {
       "number": 4,
       "adverb": null,
