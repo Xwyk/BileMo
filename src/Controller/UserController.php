@@ -86,8 +86,13 @@ class UserController extends AbstractFOSRestController
      *         "siren"="\d+"
      *     },
      * )
-     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
-
+     * @ParamConverter(
+     *     "client",
+     *     options = {
+     *         "mapping": {
+     *             "siren" : "siren"
+     *         }
+     *     })
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"users_show_client_list"},
@@ -110,15 +115,24 @@ class UserController extends AbstractFOSRestController
      *         "userId"="\d+"
      *     },
      * )
-     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
-     * @ParamConverter("user", options={"mapping": {"userId" : "id"}})
+     * @ParamConverter(
+     *     "client",
+     *     options = {
+     *         "mapping": {
+     *             "siren" : "siren"
+     *         }
+     *     })
+     * @ParamConverter(
+     *     "user",
+     *     options = {
+     *         "mapping": {
+     *             "userId" : "id"
+     *         }
+     *     })
      * @IsGranted("USER_DELETE", subject="user")
      */
     public function delete(User $user, Client $client, EntityManagerInterface $manager): View
     {
-        if (!$client->getUsers()->contains($user)){
-            return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
-        }
         $manager->remove($user);
         $manager->flush();
         return $this->view("OK", Response::HTTP_OK);
