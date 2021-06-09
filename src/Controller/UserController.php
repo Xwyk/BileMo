@@ -60,11 +60,8 @@ class UserController extends AbstractFOSRestController
      * )
      * @IsGranted("USER_SHOW", subject="user")
      */
-    public function showDetails(User $user, Client $client): User
+    public function showDetails(User $user): User
     {
-//        if (!$client->getUsers()->contains($user)){
-//            return $this->view("Unknown user for this client", Response::HTTP_NOT_FOUND);
-//        }
         return $user;
     }
 
