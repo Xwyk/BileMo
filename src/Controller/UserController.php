@@ -18,7 +18,7 @@ class UserController extends AbstractFOSRestController
 {
     /**
      * @Rest\Post(
-     *     path = "/clients/{siren}/users",
+     *     path = "/api/clients/{siren}/users",
      *     name = "app_client_add_user",
      *     requirements = {
      *         "siren"="\d+",
@@ -45,7 +45,7 @@ class UserController extends AbstractFOSRestController
     }
     /**
      * @Rest\Get(
-     *     path = "/clients/{siren}/users/{userId}",
+     *     path = "/api/clients/{siren}/users/{userId}",
      *     name = "app_user_show_details",
      *     requirements = {
      *         "siren"="\d+",
@@ -70,7 +70,7 @@ class UserController extends AbstractFOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/clients/{siren}/users",
+     *     path = "/api/clients/{siren}/users",
      *     name = "app_client_show_users",
      *     requirements = {
      *         "siren"="\d+"
@@ -93,7 +93,7 @@ class UserController extends AbstractFOSRestController
 
     /**
      * @Rest\Delete(
-     *     path = "/clients/{siren}/users/{userId}",
+     *     path = "/api/clients/{siren}/users/{userId}",
      *     name = "app_client_del_user",
      *     requirements = {
      *         "siren"="\d+",
