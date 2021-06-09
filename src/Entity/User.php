@@ -34,7 +34,7 @@ class User
 
     /**
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
-     * @Groups({"users_show_client_list", "user_show_detail"})
+     * @Groups({"users_show_client_list", "user_show_detail", "create"})
      * @Expose
      */
     private $createdAt;
@@ -43,7 +43,7 @@ class User
      * @Serializer\Type("App\Entity\Address")
      * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "create"})
      * @Expose
      */
     private $address;
@@ -51,7 +51,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
      */
     private $firstName;
@@ -59,7 +59,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
      */
     private $lastName;
@@ -67,7 +67,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
      */
     private $mailAddress;
@@ -75,7 +75,7 @@ class User
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=20, nullable=true)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "create"})
      * @Expose
      */
     private $phone;

@@ -28,8 +28,21 @@ class UserController extends AbstractFOSRestController
      *     statusCode=201,
      *     serializerGroups={"user_show_detail"},
      * )
-     * @ParamConverter("user", class="App\Entity\User", converter="fos_rest.request_body")
-     * @ParamConverter("client", options={"mapping": {"siren" : "siren"}})
+     * @ParamConverter(
+     *     "user",
+     *     converter = "fos_rest.request_body",
+     *     options = {
+     *         "validator" = {
+     *             "groups" = "create"
+     *         }
+     *     })
+     * @ParamConverter(
+     *     "client",
+     *     options = {
+     *         "mapping": {
+     *             "siren" : "siren"
+     *         }
+     *    })
      * @IsGranted("USER_ADD")
      */
     public function create(User $user, Client $client, ConstraintViolationList $violations, EntityManagerInterface $manager)
