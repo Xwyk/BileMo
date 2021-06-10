@@ -6,6 +6,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use JMS\Serializer\SerializerBuilder;
+use Symfony\Component\HttpFoundation\File\File;
 
 class ProductFixtures extends Fixture implements FixtureGroupInterface
 {
@@ -18,7 +19,7 @@ class ProductFixtures extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager)
     {
         $serializer = SerializerBuilder::create()->build();
-        $products = $serializer->deserialize(file_get_contents($this->jsonFile),'array<App\Entity\Product>', 'json');
+        $products = $serializer->deserialize((new File($this->jsonFile))->getContent(),'array<App\Entity\Product>', 'json');
         foreach ($products as $product){
             $manager->persist($product);
         }
