@@ -10,6 +10,8 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -18,7 +20,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *     fields={"siren, siret, tva"},
  * )
  */
-class Client
+class Client implements UserInterface
 {
     /**
      * @ORM\Id
@@ -58,7 +60,7 @@ class Client
 
     /**
      * @Serializer\Type("string")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", unique=true, length=255)
      * @Expose
      */
     private $username;
@@ -243,7 +245,21 @@ class Client
     public function setTva(string $tva): self
     {
         $this->tva = $tva;
-
         return $this;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

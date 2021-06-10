@@ -3,22 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\ConstraintViolationList;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Class ProductController
+ * @package App\Controller
+ */
 class ProductController extends AbstractFOSRestController
 {
 
     /**
      * @Rest\Get(
-     *     path = "/products/{id}",
+     *     path = "/api/products/{id}",
      *     name = "app_products_show_details",
      *     requirements = {"id"="\d+"}
      * )
@@ -26,6 +24,7 @@ class ProductController extends AbstractFOSRestController
      *     statusCode=200,
      *     serializerGroups={"product_show_detail"},
      * )
+     * @IsGranted("PRODUCT_SHOW")
      */
     public function showDetails(Product $product): Product
     {
@@ -35,13 +34,15 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/products",
+     *     path = "/api/products",
      *     name = "app_products_show_list",
      * )
+     *
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"products_show_list"},
      * )
+     * @IsGranted("PRODUCTS_LIST")
      */
     public function showList(): array
     {
