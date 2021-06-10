@@ -67,13 +67,6 @@ class Client implements UserInterface
 
     /**
      * @Serializer\Type("string")
-     * @ORM\Column(type="string", unique=true, length=255)
-     *
-     */
-    private $apiToken;
-
-    /**
-     * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      * @Expose
      */
@@ -268,21 +261,5 @@ class Client implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiToken(): string
-    {
-        return $this->apiToken;
-    }
-
-    /**
-     * @param string $apiToken
-     */
-    public function setApiToken(string $apiToken)
-    {
-        $this->apiToken = $apiToken;
     }
 }

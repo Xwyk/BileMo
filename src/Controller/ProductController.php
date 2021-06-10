@@ -16,7 +16,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/products/{id}",
+     *     path = "/api/products/{id}",
      *     name = "app_products_show_details",
      *     requirements = {"id"="\d+"}
      * )
@@ -34,7 +34,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * @Rest\Get(
-     *     path = "/products",
+     *     path = "/api/products",
      *     name = "app_products_show_list",
      * )
      *
