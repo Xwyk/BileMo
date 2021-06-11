@@ -13,15 +13,9 @@ fos_rest:
     rules:
       - { path: '^/', priorities: [ 'json' ], fallback_format: 'json' }
   versioning:
-    enabled:              false
-    default_version:      1.0
+    enabled: true
+    default_version: 1.0
     resolvers:
-      query:
-        enabled:              true
-        parameter_name:       version
       custom_header:
-        enabled:              true
-        header_name:          X-Accept-Version
-      media_type:
-        enabled:              true
-        regex:                '/(v|version)=(?P<version>[0-9\.]+)/'
+        enabled: true
+        header_name: X-Accept-Version
