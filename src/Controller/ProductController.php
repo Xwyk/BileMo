@@ -61,7 +61,6 @@ class ProductController extends AbstractFOSRestController
         $limit = $paramFetcher->get("limit");
         $list = $this->getDoctrine()->getRepository(Product::class)->findAll();
         $total = count($list);
-
         $offset = ($page - 1) * $limit;
         $pages = (int)ceil($total / $limit);
 
@@ -80,7 +79,7 @@ class ProductController extends AbstractFOSRestController
         );
 
         $json = $serializer->serialize($paginatedCollection, 'json');
-//        dd($paginatedCollection);
+
         return new Response($json, 200);
     }
 }
