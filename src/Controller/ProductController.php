@@ -5,7 +5,11 @@ namespace App\Controller;
 use App\Entity\Product;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Request\ParamFetcherInterface;
+use Hateoas\HateoasBuilder;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Hateoas\Representation\PaginatedRepresentation;
+use Hateoas\Representation\CollectionRepresentation;
 
 /**
  * Class ProductController
@@ -37,7 +41,6 @@ class ProductController extends AbstractFOSRestController
      *     path = "/api/products",
      *     name = "app_products_show_list",
      * )
-     *
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"products_show_list"},
