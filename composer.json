@@ -25,7 +25,8 @@
         "symfony/security-bundle": "5.2.*",
         "symfony/twig-bundle": "5.2.*",
         "symfony/validator": "5.2.*",
-        "symfony/yaml": "5.2.*"
+        "symfony/yaml": "5.2.*",
+        "willdurand/hateoas-bundle": "^2.2"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
