@@ -8,11 +8,14 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Hateoas\HateoasBuilder;
+use Hateoas\Representation\OffsetRepresentation;
+use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Hateoas\Representation\PaginatedRepresentation;
 use Hateoas\Representation\CollectionRepresentation;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -46,14 +49,12 @@ class ProductController extends AbstractFOSRestController
      *     name = "app_products_show_list",
      * )
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
-     * @QueryParam(name="limit", requirements="\d+", default="1", description="Page of the overview")
+     * @QueryParam(name="limit", requirements="\d+", default="10", description="Page of the overview")
      * @Rest\View(
-     *     statusCode=200,
-     *     serializerGroups={"products_show_list"},
      * )
      * @IsGranted("PRODUCTS_LIST")
      */
-    public function showList(SerializerInterface $serializer, ParamFetcherInterface $paramFetcher): Response
+    public function showList(SerializerInterface $serializer, ParamFetcherInterface $paramFetcher): PaginatedRepresentation
     {
 
         $hateoas = HateoasBuilder::create()->build();
@@ -74,12 +75,13 @@ class ProductController extends AbstractFOSRestController
             $pages,       // total pages
             'page',  // page route parameter name, optional, defaults to 'page',
             'limit',
-            false,   // generate relative URIs, optional, defaults to `false`
+            true,   // generate relative URIs, optional, defaults to `false`
             $total       // total collection size, optional, defaults to `null`
         );
 
-        $json = $serializer->serialize($paginatedCollection, 'json');
+        dd($paginatedCollection->getInline());
 
-        return new Response($json, 200);
+
+        return $paginatedCollection;
     }
 }

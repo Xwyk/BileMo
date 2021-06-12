@@ -93,7 +93,7 @@ class Product
     /**
      * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
-     * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $createdAt;
 
