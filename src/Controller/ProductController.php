@@ -51,6 +51,8 @@ class ProductController extends AbstractFOSRestController
      * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
      * @QueryParam(name="limit", requirements="\d+", default="10", description="Page of the overview")
      * @Rest\View(
+     *     statusCode=200,
+     *     serializerGroups={"products_show_list", "Default"},
      * )
      * @IsGranted("PRODUCTS_LIST")
      */
@@ -79,7 +81,7 @@ class ProductController extends AbstractFOSRestController
             $total       // total collection size, optional, defaults to `null`
         );
 
-        dd($paginatedCollection->getInline());
+//        dd($paginatedCollection->getInline());
 
 
         return $paginatedCollection;
