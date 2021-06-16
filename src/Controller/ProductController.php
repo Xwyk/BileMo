@@ -56,34 +56,35 @@ class ProductController extends AbstractFOSRestController
      * )
      * @IsGranted("PRODUCTS_LIST")
      */
-    public function showList(SerializerInterface $serializer, ParamFetcherInterface $paramFetcher): PaginatedRepresentation
+    public function showList(ParamFetcherInterface $paramFetcher): PaginatedRepresentation
     {
+        // Values used for paginated collection
 
-        $hateoas = HateoasBuilder::create()->build();
+        // Actual page
         $page = $paramFetcher->get("page");
+        // Elements by page
         $limit = $paramFetcher->get("limit");
+        // Elements list
         $list = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        // List size
         $total = count($list);
+        // Actual offset
         $offset = ($page - 1) * $limit;
+        // Number of pages
         $pages = (int)ceil($total / $limit);
 
 
-        $paginatedCollection = new PaginatedRepresentation(
+        return new PaginatedRepresentation(
             new CollectionRepresentation(array_slice($list, $offset, $page * $limit)),
             'app_products_show_list', // route
             array(), // route parameters
-            $page,       // page number
-            $limit,      // limit
-            $pages,       // total pages
-            'page',  // page route parameter name, optional, defaults to 'page',
-            'limit',
-            true,   // generate relative URIs, optional, defaults to `false`
-            $total       // total collection size, optional, defaults to `null`
+            $page,
+            $limit,
+            $pages,
+            'page', // Name of queryParam
+            'limit', // Name of queryParam
+            true,   // Absolute URLs
+            $total
         );
-
-//        dd($paginatedCollection->getInline());
-
-
-        return $paginatedCollection;
     }
 }
