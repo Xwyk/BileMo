@@ -65,17 +65,15 @@ class ProductController extends AbstractFOSRestController
         // Elements by page
         $limit = $paramFetcher->get("limit");
         // Elements list
-        $list = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $list = $this->getDoctrine()->getRepository(Product::class)->paginatedFindAll($limit, $page);
         // List size
         $total = count($list);
-        // Actual offset
-        $offset = ($page - 1) * $limit;
         // Number of pages
         $pages = (int)ceil($total / $limit);
 
 
         return new PaginatedRepresentation(
-            new CollectionRepresentation(array_slice($list, $offset, $page * $limit)),
+            new CollectionRepresentation($list),
             'app_products_show_list', // route
             array(), // route parameters
             $page,
