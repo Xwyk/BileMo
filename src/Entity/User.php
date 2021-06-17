@@ -57,6 +57,7 @@ class User
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"nodisplay"})
      * @Expose
      */
     private $client;
