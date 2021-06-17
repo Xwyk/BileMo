@@ -94,16 +94,16 @@ class UserController extends AbstractFOSRestController
         // Elements by page
         $limit = $paramFetcher->get("limit");
         // Elements list
-        $list = $this->getUser()->getUsers()->getValues();
+        $list = $this->getUser()->getUsers();
+//        $list = $this->getUser()->getUsers()->getValues();
         // List size
         $total = count($list);
         // Actual offset
         $offset = ($page - 1) * $limit;
-//        dd($list->slice($offset, $page * $limit));
         // Number of pages
         $pages = (int)ceil($total / $limit);
         return new PaginatedRepresentation(
-            new CollectionRepresentation(array_slice($list, $offset, $page * $limit)),
+            new CollectionRepresentation($list->slice($offset, $page * $limit)),
             'app_products_show_list', // route
             array(), // route parameters
             $page,
