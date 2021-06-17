@@ -65,6 +65,12 @@
             "symfony console d:m:m -n",
             "symfony console d:f:l -n"
         ],
+        "resetForTest": [
+            "symfony console d:d:d --env=test --if-exists -f",
+            "symfony console d:d:c --env=test",
+            "symfony console d:m:m -n --env=test",
+            "symfony console d:f:l -n --env=test"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
