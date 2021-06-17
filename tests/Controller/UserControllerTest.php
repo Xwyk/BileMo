@@ -2,46 +2,33 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Client;
-use App\Entity\Product;
-use App\Entity\User;
-use App\Repository\ClientRepository;
-use App\Repository\ProductRepository;
-use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\BilemoWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class UserControllerTest extends WebTestCase
+class UserControllerTest extends BilemoWebTestCase
 {
-    public function testShowDetails(): void
+    public function testEntryPoints(): void
     {
+        // Get token for this test
+        $GLOBALS['token'] = $this->entryPoint([
+            "name"           => "login",
+            "type"           => "POST",
+            "url"            => "/api/login_check",
+            "parameters"     => [],
+            "files"          => [],
+            "server"         => [],
+            "authenticated"  => false,
+            "content"        => json_encode([
+                "username" => "user1",
+                "password" => "user1"
+            ]),
+            "expectedCode"   => Response::HTTP_OK,
+            "needReturnOnOK" => true
+        ])->token;
 
-        $client = self::createClient();
-        $firstClient = $this->getFirstClient();
-        $firstClientSiren = $firstClient->getSiren();
-        $firstUserId = $firstClient->getUsers()[0]->getId();
-        $client->request(
-            'GET',
-            "/clients/".$firstClientSiren."/users/".$firstUserId
-        );
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    public function testShowList(): void
-    {
-        $client = self::createClient();
-        $firstClient = $this->getFirstClient();
-        $firstClientSiren = $firstClient->getSiren();
-        $client->request(
-            'GET',
-            "/clients/".$firstClientSiren."/users"
-        );
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    public function testCreate(): void
-    {
-        $data = array
+        $userForClient1 = 1;
+        $userForClient2 = 5;
+        $testUser = array
         (
             "address"  => [
                 "number"=> 4,
@@ -55,48 +42,130 @@ class UserControllerTest extends WebTestCase
             "mail_address"=> "phpunit@test.com",
             "phone"=> "0605410616"
         );
-        $client = self::createClient();
-        $firstClient = $this->getFirstClient();
-        $firstClientSiren = $firstClient->getSiren();
-        $client->request(
-            'POST',
-            "/clients/".$firstClientSiren."/users",
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode($data)
-        );
-        $this->assertResponseStatusCodeSame(Response::HTTP_CREATED);
-        $this->assertEquals('Florian', $this->getCreatedUser()->getFirstName());
-    }
-
-    public function testDelete(): void
-    {
-        $client = self::createClient();
-        $firstClient = $this->getFirstClient();
-        $firstClientSiren = $firstClient->getSiren();
-        $firstUserId =  $this->getCreatedUser()->getId();
-        $client->request(
-            'DELETE',
-            "/clients/".$firstClientSiren."/users/".$firstUserId
-        );
-        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-    }
-
-    private function getFirstClient(): Client
-    {
-        return (static::$container->get(ClientRepository::class)->createQueryBuilder('c')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult())[0];
-    }
-
-    private function getCreatedUser(): User
-    {
-        return (static::$container->get(UserRepository::class)->createQueryBuilder('c')
-            ->andWhere('c.mailAddress = :val')
-            ->setParameter('val', 'phpunit@test.com')
-            ->getQuery()
-            ->getResult())[0];
+        $tests = [
+            [
+                "name"           => "testShowDetailsUnauthenticated",
+                "type"           => "GET",
+                "url"            => "/api/users/".$userForClient1,
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => false,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testShowDetailsAuthenticated",
+                "type"           => "GET",
+                "url"            => "/api/users/".$userForClient1,
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => true,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_OK,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testShowDetailsWrongAuthenticated",
+                "type"           => "GET",
+                "url"            => "/api/users/".$userForClient2,
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => true,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_FORBIDDEN,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testShowListUnauthenticated",
+                "type"           => "GET",
+                "url"            => "/api/users",
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => false,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testShowListAuthenticated",
+                "type"           => "GET",
+                "url"            => "/api/users",
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => true,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_OK,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testCreateUnauthenticated",
+                "type"           => "POST",
+                "url"            => "/api/users",
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => false,
+                "content"        => json_encode($testUser),
+                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testCreateAuthenticated",
+                "type"           => "POST",
+                "url"            => "/api/users",
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => true,
+                "content"        => json_encode($testUser),
+                "expectedCode"   => Response::HTTP_CREATED,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testDeleteUnauthenticated",
+                "type"           => "DELETE",
+                "url"            => "/api/users/".$userForClient1,
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => false,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testDeleteWrongAuthenticated",
+                "type"           => "DELETE",
+                "url"            => "/api/users/".$userForClient2,
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => true,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_FORBIDDEN,
+                "needReturnOnOK" => false
+            ],
+            [
+                "name"           => "testDeleteAuthenticated",
+                "type"           => "DELETE",
+                "url"            => "/api/users/".$userForClient1,
+                "parameters"     => [],
+                "files"          => [],
+                "server"         => [],
+                "authenticated"  => true,
+                "content"        => "",
+                "expectedCode"   => Response::HTTP_OK,
+                "needReturnOnOK" => false
+            ]
+        ];
+        foreach ($tests as $test){
+            $this->entryPoint($test);
+        }
     }
 }
