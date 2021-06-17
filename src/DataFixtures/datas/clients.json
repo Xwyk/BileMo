@@ -16,6 +16,45 @@
         "last_name": "LEBOUL",
         "mail_address": "florianelboul@gmail.com",
         "phone": "0605410616"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian1",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0601010101"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian2",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0602020202"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian3",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0603030303"
       }
     ],
     "username": "user1",

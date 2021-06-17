@@ -22,42 +22,42 @@ class Address
     /**
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "users_show_client_list"})
      */
     private $number;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=16, nullable=true)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "users_show_client_list"})
      */
     private $adverb;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "users_show_client_list"})
      */
     private $street;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string")
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "users_show_client_list"})
      */
     private $postal;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "users_show_client_list"})
      */
     private $city;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail"})
+     * @Groups({"user_show_detail", "users_show_client_list"})
      */
     private $country;
 

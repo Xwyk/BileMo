@@ -6,9 +6,14 @@ use App\Entity\Client;
 use App\Entity\User;
 use App\Repository\ClientRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\PersistentCollection;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
+use Hateoas\Representation\CollectionRepresentation;
+use Hateoas\Representation\PaginatedRepresentation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\File\File;
@@ -72,16 +77,43 @@ class UserController extends AbstractFOSRestController
      *     path = "/api/users",
      *     name = "app_client_show_users"
      * )
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
+     * @QueryParam(name="limit", requirements="\d+", default="10", description="Page of the overview")
      * @Rest\View(
      *     statusCode=200,
-     *     serializerGroups={"users_show_client_list"},
+     *     serializerGroups={"users_show_client_list", "Default"},
      * )
-     *
      * @IsGranted("USERS_LIST")
      */
-    public function showList(): object
+    public function showList(ParamFetcherInterface $paramFetcher): object
     {
-        return $this->getUser()->getUsers();
+        // Values used for paginated collection
+
+        // Actual page
+        $page = $paramFetcher->get("page");
+        // Elements by page
+        $limit = $paramFetcher->get("limit");
+        // Elements list
+        $list = $this->getUser()->getUsers();
+//        $list = $this->getUser()->getUsers()->getValues();
+        // List size
+        $total = count($list);
+        // Actual offset
+        $offset = ($page - 1) * $limit;
+        // Number of pages
+        $pages = (int)ceil($total / $limit);
+        return new PaginatedRepresentation(
+            new CollectionRepresentation($list->slice($offset, $page * $limit)),
+            'app_products_show_list', // route
+            array(), // route parameters
+            $page,
+            $limit,
+            $pages,
+            'page', // Name of queryParam
+            'limit', // Name of queryParam
+            true,   // Absolute URLs
+            $total
+        );
     }
 
     /**

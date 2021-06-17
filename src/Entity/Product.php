@@ -5,10 +5,23 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ExclusionPolicy("all")
+ * @Hateoas\Relation(
+ *     "self",
+ *     href = @Hateoas\Route(
+ *         "app_products_show_details",
+ *         parameters = {"id"="expr(object.getId())"},
+ *         absolute = true
+ *     ),
+ *     exclusion = @Hateoas\Exclusion(groups={"products_show_list"})
+ * )
  */
 class Product
 {
@@ -17,6 +30,7 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list"})
+     * @Expose
      */
     private $id;
 
@@ -24,6 +38,7 @@ class Product
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $brand;
 
@@ -31,6 +46,7 @@ class Product
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $commercialName;
 
@@ -38,6 +54,7 @@ class Product
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $model;
 
@@ -45,6 +62,7 @@ class Product
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $rom;
 
@@ -52,6 +70,7 @@ class Product
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $ram;
 
@@ -59,6 +78,7 @@ class Product
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $battery;
 
@@ -66,13 +86,15 @@ class Product
      * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $launchedAt;
 
     /**
      * @Serializer\Type("DateTime")
      * @ORM\Column(type="datetime")
-     * @Groups({"products_show_list", "product_show_detail"})
+     * @Groups({"product_show_detail"})
+     * @Expose
      */
     private $createdAt;
 
@@ -80,6 +102,7 @@ class Product
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
+     * @Expose
      */
     private $price;
 
