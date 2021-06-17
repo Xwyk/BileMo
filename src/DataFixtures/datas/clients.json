@@ -70,5 +70,77 @@
     "siret": 1222,
     "siren": 1222,
     "tva": "1222"
+  },
+  {
+    "name": "Super U",
+    "description": "Commerce de détail",
+    "created_at": "2020-05-07T10:30:00+00:00",
+    "users": [
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian4",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0605410616"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian5",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0601010101"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian6",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0602020202"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des vignerons",
+          "postal": "44860",
+          "city": "Pont-Saint-Martin",
+          "country": "France"
+        },
+        "first_name": "Florian7",
+        "last_name": "LEBOUL",
+        "mail_address": "florianelboul@gmail.com",
+        "phone": "0603030303"
+      }
+    ],
+    "username": "user2",
+    "password": "$2y$10$fj1moyVi4UVChyTxGmHfC..w.30nNN5q5DZDhtcEOrV0dNN4Uyz9i",
+    "address": {
+      "number": 4,
+      "adverb": null,
+      "street": "Rue des vignerons",
+      "postal": 44860,
+      "city": "Pont-Saint-Martin",
+      "country": "France"
+    },
+    "siret": 1333,
+    "siren": 1333,
+    "tva": "1333"
   }
 ]
