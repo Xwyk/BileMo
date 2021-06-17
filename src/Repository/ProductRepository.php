@@ -23,12 +23,12 @@ class ProductRepository extends ServiceEntityRepository
       * @return Product[] Returns an array of Product objects
       */
 
-    public function paginatedFindAll(int $max, int $offset = 0)
+    public function paginatedFindAll(int $max, int $page = 1)
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.id', 'ASC')
             ->setMaxResults($max)
-            ->setFirstResult($offset)
+            ->setFirstResult(($page-1) * $max)
             ->getQuery()
             ->getResult()
         ;
