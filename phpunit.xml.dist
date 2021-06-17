@@ -15,7 +15,7 @@
   </php>
   <testsuites>
     <testsuite name="Project Test Suite">
-      <directory>tests</directory>
+      <directory>tests\Controller</directory>
     </testsuite>
   </testsuites>
   <!-- Run `composer require symfony/phpunit-bridge` before enabling this extension -->
