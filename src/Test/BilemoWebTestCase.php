@@ -3,7 +3,6 @@
 
 namespace App\Test;
 
-use PHPUnit\Util\Exception;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
