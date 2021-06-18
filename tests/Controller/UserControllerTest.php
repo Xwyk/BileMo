@@ -198,7 +198,7 @@ class UserControllerTest extends BilemoWebTestCase
     protected function checkAttributes(array $result, array $toCompare, string $name){
         foreach ($toCompare as $attribute => $value){
             // If $value is an array, enter in the recursive world
-            if (gettype($value) == "array"){
+            if (is_array($value)){
                 $this->checkAttributes($result[$attribute], $value, $name);
                 // Once all array attributes are checked, continue with next parent's attribute
                 continue;
