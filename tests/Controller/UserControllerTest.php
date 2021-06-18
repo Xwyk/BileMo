@@ -11,7 +11,7 @@ class UserControllerTest extends BilemoWebTestCase
     public function loadEntryPoints(): void
     {
         $userForClient1 = 1;
-        $userForClient2 = 5;
+        $userForClient2 = 10;
         $this->testUser = array
         (
             "address"  => [
