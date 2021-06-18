@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BilemoWebTestCase extends WebTestCase
 {
+    protected $token;
     protected function entryPoint(array $params)
     {
         self::ensureKernelShutdown();
@@ -22,7 +23,7 @@ class BilemoWebTestCase extends WebTestCase
                     'CONTENT_TYPE' => 'application/json',
                     'ACTUAL_TEST'  => $params['name']
                 ],
-                ($params['authenticated'])?["HTTP_AUTHORIZATION" => "Bearer ".$GLOBALS['token']]:[]),
+                ($params['authenticated'])?["HTTP_AUTHORIZATION" => "Bearer ".$this->token]:[]),
             $params['content']
         );
         $this->assertResponseStatusCodeSame($params['expectedCode']);

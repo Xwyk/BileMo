@@ -12,7 +12,7 @@ class ProductControllerTest extends BilemoWebTestCase
     public function testEntryPoints(): void
     {
         // Get token for this test
-        $GLOBALS['token'] = $this->entryPoint([
+        $this->token = $this->entryPoint([
             "name"           => "login",
             "type"           => "POST",
             "url"            => "/api/login_check",
