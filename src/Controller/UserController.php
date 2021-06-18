@@ -104,7 +104,7 @@ class UserController extends AbstractFOSRestController
         $pages = (int)ceil($total / $limit);
         return new PaginatedRepresentation(
             new CollectionRepresentation($list->slice($offset, $page * $limit)),
-            'app_products_show_list', // route
+            'app_client_show_users', // route
             array(), // route parameters
             $page,
             $limit,
