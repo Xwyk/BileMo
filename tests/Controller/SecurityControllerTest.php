@@ -3,15 +3,15 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BilemoWebTestCase;
+use App\Test\BilemoWebTestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends BilemoWebTestCase
 {
-    public function testEntryPoints(): void
+    public function loadEntryPoints(): void
     {
-        $tests  = [
+        $this->tests  = [
             [
                 "name"           => "testAuthenticateGoodCredentials",
                 "type"           => "DELETE",
@@ -43,9 +43,6 @@ class SecurityControllerTest extends BilemoWebTestCase
                 "needReturnOnOK" => false
             ]
         ];
-        foreach ($tests as $test){
-            $this->entryPoint($test);
-        }
     }
 
 

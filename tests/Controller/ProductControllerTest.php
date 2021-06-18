@@ -4,32 +4,15 @@ namespace App\Tests\Controller;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
-use App\Tests\BilemoWebTestCase;
+use App\Test\BilemoWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductControllerTest extends BilemoWebTestCase
 {
-    public function testEntryPoints(): void
+    public function loadEntryPoints(): void
     {
-        // Get token for this test
-        $this->token = $this->entryPoint([
-            "name"           => "login",
-            "type"           => "POST",
-            "url"            => "/api/login_check",
-            "parameters"     => [],
-            "files"          => [],
-            "server"         => [],
-            "authenticated"  => false,
-            "content"        => json_encode([
-                "username" => "user1",
-                "password" => "user1"
-            ]),
-            "expectedCode"   => Response::HTTP_OK,
-            "needReturnOnOK" => true
-        ])->token;
-
         $productId = 1;
-        $tests = [
+        $this->tests = [
             [
                 "name" => "testShowDetailsUnauthenticated",
                 "type" => "GET",
@@ -79,8 +62,5 @@ class ProductControllerTest extends BilemoWebTestCase
                 "needReturnOnOK" => false
             ]
         ];
-        foreach ($tests as $test) {
-            $this->entryPoint($test);
-        }
     }
 }

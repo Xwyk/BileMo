@@ -2,33 +2,17 @@
 
 namespace App\Tests\Controller;
 
-use App\Tests\BilemoWebTestCase;
+use App\Test\BilemoWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends BilemoWebTestCase
 {
-    public function testEntryPoints(): void
+    protected $testUser;
+    public function loadEntryPoints(): void
     {
-        // Get token for this test
-        $this->token = $this->entryPoint([
-            "name"           => "login",
-            "type"           => "POST",
-            "url"            => "/api/login_check",
-            "parameters"     => [],
-            "files"          => [],
-            "server"         => [],
-            "authenticated"  => false,
-            "content"        => json_encode([
-                "username" => "user1",
-                "password" => "user1"
-            ]),
-            "expectedCode"   => Response::HTTP_OK,
-            "needReturnOnOK" => true
-        ])->token;
-
         $userForClient1 = 1;
         $userForClient2 = 5;
-        $testUser = array
+        $this->testUser = array
         (
             "address"  => [
                 "number"=> 4,
@@ -42,7 +26,7 @@ class UserControllerTest extends BilemoWebTestCase
             "mail_address"=> "phpunit@test.com",
             "phone"=> "0605410616"
         );
-        $tests = [
+        $this->tests = [
             [
                 "name"           => "testShowDetailsUnauthenticated",
                 "type"           => "GET",
@@ -65,7 +49,8 @@ class UserControllerTest extends BilemoWebTestCase
                 "authenticated"  => true,
                 "content"        => "",
                 "expectedCode"   => Response::HTTP_OK,
-                "needReturnOnOK" => false
+                "needReturnOnOK" => true,
+                "additionalCheck"=> "checkShowDetailsAuthenticated"
             ],
             [
                 "name"           => "testShowDetailsWrongAuthenticated",
@@ -101,7 +86,8 @@ class UserControllerTest extends BilemoWebTestCase
                 "authenticated"  => true,
                 "content"        => "",
                 "expectedCode"   => Response::HTTP_OK,
-                "needReturnOnOK" => false
+                "needReturnOnOK" => true,
+                "additionalCheck"=> "checkShowListAuthenticated"
             ],
             [
                 "name"           => "testCreateUnauthenticated",
@@ -111,7 +97,7 @@ class UserControllerTest extends BilemoWebTestCase
                 "files"          => [],
                 "server"         => [],
                 "authenticated"  => false,
-                "content"        => json_encode($testUser),
+                "content"        => json_encode($this->testUser),
                 "expectedCode"   => Response::HTTP_UNAUTHORIZED,
                 "needReturnOnOK" => false
             ],
@@ -123,9 +109,10 @@ class UserControllerTest extends BilemoWebTestCase
                 "files"          => [],
                 "server"         => [],
                 "authenticated"  => true,
-                "content"        => json_encode($testUser),
+                "content"        => json_encode($this->testUser),
                 "expectedCode"   => Response::HTTP_CREATED,
-                "needReturnOnOK" => false
+                "needReturnOnOK" => true,
+                "additionalCheck"=> "checkCreateAuthenticated"
             ],
             [
                 "name"           => "testDeleteUnauthenticated",
@@ -161,11 +148,62 @@ class UserControllerTest extends BilemoWebTestCase
                 "authenticated"  => true,
                 "content"        => "",
                 "expectedCode"   => Response::HTTP_OK,
-                "needReturnOnOK" => false
+                "needReturnOnOK" => true,
+                "additionalCheck"=> "checkDeleteAuthenticated"
             ]
         ];
-        foreach ($tests as $test){
-            $this->entryPoint($test);
+    }
+
+    protected function checkShowListAuthenticated($result){
+
+    }
+
+    /**
+     * Checks newly created user by comparing returned user values on creation with initial set of data
+     * @param $result
+     */
+    protected function checkCreateAuthenticated($result){
+        $this->checkAttributes(
+            (json_decode(json_encode($result), true)),
+            (json_decode(json_encode($this->testUser), true)),
+            "checkCreateAuthenticated");
+        $this->checkLinks($result, ['create', 'delete']);
+    }
+
+    protected function checkDeleteAuthenticated($result){
+
+    }
+
+    protected function checkShowDetailsAuthenticated($result){
+        $this->checkLinks($result, ['create', 'delete']);
+    }
+
+    /**
+     * Checks for each link in $expetedLinks if it exists in $object->_links.
+     * @param object $object
+     * @param array $expectedLinks
+     */
+    protected function checkLinks(object $object, array $expectedLinks)
+    {
+        foreach ($expectedLinks as $link){
+            $this->assertTrue(isset($object->_links->$link), "Link ".$link." isn't present in object");
+        }
+    }
+
+    /**
+     * Recursively check that result contains all toCompare values
+     * @param array $result
+     * @param array $toCompare
+     */
+    protected function checkAttributes(array $result, array $toCompare, string $name){
+        foreach ($toCompare as $attribute => $value){
+            // If $value is an array, enter in the recursive world
+            if (gettype($value) == "array"){
+                $this->checkAttributes($result[$attribute], $value, $name);
+                // Once all array attributes are checked, continue with next parent's attribute
+                continue;
+            }
+            $this->assertEquals($value, $result[$attribute], "Failed on ".$name." at ".$attribute);
         }
     }
 }
