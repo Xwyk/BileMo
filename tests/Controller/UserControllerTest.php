@@ -2,18 +2,33 @@
 
 namespace App\Tests\Controller;
 
+use App\Repository\UserRepository;
 use App\Test\BilemoWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends BilemoWebTestCase
 {
     protected $testUser;
+    protected $userForClient1;
+    protected $userIdForClient1 = 1;
+    protected $userIdForClient2 = 9;
+
     public function loadEntryPoints(): void
     {
-        $userForClient1 = 1;
-        $userForClient2 = 10;
-        $this->testUser = array
-        (
+        $this->userForClient1 = array(
+            "address" => array(
+                "number"  => 1,
+                "street"  => "Rue des users",
+                "postal"  => "44000",
+                "city"    => "Nantes",
+                "country" => "France"
+            ),
+            "first_name"   => "User 1",
+            "last_name"    => "of Client 1",
+            "mail_address" => "user1.1@gmail.com",
+            "phone"        => "0601010101"
+        );
+        $this->testUser = array(
             "address"  => [
                 "number"=> 4,
                 "street"=> "Rue des vignerons",
@@ -30,7 +45,7 @@ class UserControllerTest extends BilemoWebTestCase
             [
                 "name"           => "testShowDetailsUnauthenticated",
                 "type"           => "GET",
-                "url"            => "/api/users/".$userForClient1,
+                "url"            => "/api/users/".$this->userIdForClient1,
                 "parameters"     => [],
                 "files"          => [],
                 "server"         => [],
@@ -42,7 +57,7 @@ class UserControllerTest extends BilemoWebTestCase
             [
                 "name"           => "testShowDetailsAuthenticated",
                 "type"           => "GET",
-                "url"            => "/api/users/".$userForClient1,
+                "url"            => "/api/users/".$this->userIdForClient1,
                 "parameters"     => [],
                 "files"          => [],
                 "server"         => [],
@@ -55,7 +70,7 @@ class UserControllerTest extends BilemoWebTestCase
             [
                 "name"           => "testShowDetailsWrongAuthenticated",
                 "type"           => "GET",
-                "url"            => "/api/users/".$userForClient2,
+                "url"            => "/api/users/".$this->userIdForClient2,
                 "parameters"     => [],
                 "files"          => [],
                 "server"         => [],
@@ -117,7 +132,7 @@ class UserControllerTest extends BilemoWebTestCase
             [
                 "name"           => "testDeleteUnauthenticated",
                 "type"           => "DELETE",
-                "url"            => "/api/users/".$userForClient1,
+                "url"            => "/api/users/".$this->userIdForClient1,
                 "parameters"     => [],
                 "files"          => [],
                 "server"         => [],
@@ -129,7 +144,7 @@ class UserControllerTest extends BilemoWebTestCase
             [
                 "name"           => "testDeleteWrongAuthenticated",
                 "type"           => "DELETE",
-                "url"            => "/api/users/".$userForClient2,
+                "url"            => "/api/users/".$this->userIdForClient2,
                 "parameters"     => [],
                 "files"          => [],
                 "server"         => [],
@@ -141,7 +156,7 @@ class UserControllerTest extends BilemoWebTestCase
             [
                 "name"           => "testDeleteAuthenticated",
                 "type"           => "DELETE",
-                "url"            => "/api/users/".$userForClient1,
+                "url"            => "/api/users/".$this->userIdForClient1,
                 "parameters"     => [],
                 "files"          => [],
                 "server"         => [],
@@ -154,8 +169,29 @@ class UserControllerTest extends BilemoWebTestCase
         ];
     }
 
+    /**
+     * Checks first user in list correspond to firs user data defined in class and check _links on each user displayed
+     * @param $result
+     */
     protected function checkShowListAuthenticated($result){
 
+        $usersList = $result->_embedded->items;
+        $firstUserInList = $this->userForClient1;
+
+        // Unsetting address & phone because these values aren't displayed in list
+        unset($firstUserInList['address']);
+        unset($firstUserInList['phone']);
+
+        $this->checkAttributes(
+            (json_decode(json_encode($usersList[0]), true)),
+            (json_decode(json_encode($firstUserInList), true)),
+            "checkShowListAuthenticated");
+
+        foreach ($usersList as $resultUser){
+            $this->checkLinks($resultUser, ['create', 'delete', 'self']);
+        }
+
+        $this->checkLinks($result, ['first', 'last', 'self']);
     }
 
     /**
@@ -170,11 +206,30 @@ class UserControllerTest extends BilemoWebTestCase
         $this->checkLinks($result, ['create', 'delete']);
     }
 
+    /**
+     * Check if response equals "OK" and search user based on id in database. Assert this search's result is empty
+     * @param $result
+     */
     protected function checkDeleteAuthenticated($result){
-
+        $this->assertEquals("OK", $result);
+        $this->assertEmpty(
+            static::$container->get(UserRepository::class)->createQueryBuilder('u')
+                ->andWhere('u.id = :val')
+                ->setParameter('val', $this->userIdForClient1)
+                ->getQuery()
+                ->getResult()
+        );
     }
 
+    /**
+     * Checks if returned user (id defined in class) correspond to data (defined in class) and check _links content
+     * @param $result
+     */
     protected function checkShowDetailsAuthenticated($result){
+        $this->checkAttributes(
+            (json_decode(json_encode($result), true)),
+            (json_decode(json_encode($this->userForClient1), true)),
+            "checkShowDetailsAuthenticated");
         $this->checkLinks($result, ['create', 'delete']);
     }
 
