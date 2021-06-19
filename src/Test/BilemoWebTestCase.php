@@ -74,4 +74,33 @@ abstract class BilemoWebTestCase extends WebTestCase implements BilemoWebTestCas
             true
         )->token;
     }
+
+    /**
+     * Checks for each link in $expetedLinks if it exists in $object->_links.
+     * @param object $object
+     * @param array $expectedLinks
+     */
+    protected function checkLinks(object $object, array $expectedLinks)
+    {
+        foreach ($expectedLinks as $link){
+            $this->assertTrue(isset($object->_links->$link), "Link ".$link." isn't present in object");
+        }
+    }
+
+    /**
+     * Recursively check that result contains all toCompare values
+     * @param array $result
+     * @param array $toCompare
+     */
+    protected function checkAttributes(array $result, array $toCompare){
+        foreach ($toCompare as $attribute => $value){
+            // If $value is an array, enter in the recursive world
+            if (is_array($value)){
+                $this->checkAttributes($result[$attribute], $value);
+                // Once all array attributes are checked, continue with next parent's attribute
+                continue;
+            }
+            $this->assertEquals($value, $result[$attribute], "Failed on attribute ".$attribute);
+        }
+    }
 }
