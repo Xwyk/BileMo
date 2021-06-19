@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation\Expose;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\NotNull;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -19,6 +20,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
  * @UniqueEntity(
  *     fields={"siren, siret, tva"},
  * )
+ * @OA\Schema
  */
 class Client implements UserInterface
 {

@@ -7,16 +7,16 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use Hateoas\HateoasBuilder;
-use Hateoas\Representation\OffsetRepresentation;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\Serializer;
-use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Hateoas\Representation\PaginatedRepresentation;
 use Hateoas\Representation\CollectionRepresentation;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
+use OpenApi\Annotations\Schema;
+use Nelmio\ApiDocBundle\Annotation as Doc;
+
+
 
 /**
  * Class ProductController
@@ -26,7 +26,7 @@ class ProductController extends AbstractFOSRestController
 {
 
     /**
-     * @Rest\Get(
+     * @Rest\Get (
      *     path = "/api/products/{id}",
      *     name = "app_products_show_details",
      *     requirements = {"id"="\d+"}
@@ -34,6 +34,31 @@ class ProductController extends AbstractFOSRestController
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"product_show_detail"},
+     * )
+     * @OA\Get (
+     *      description="Return informations about phone that correspond to passed id."
+     * )
+     * @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     description="Product id to get information about",
+     *     @OA\Schema(type="int"),
+     *     required=true
+     *
+     * )
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns products details",
+     *     @OA\JsonContent(ref=@Model(type=Product::class, groups={"product_show_detail"}))
+     * )
+     *
+     * @OA\Response(
+     *     response=404,
+     *     description="Product not found"
+     * )
+     * @OA\Response(
+     *     response=401,
+     *     description="Unauthorized : user isn't connected"
      * )
      * @IsGranted("PRODUCT_SHOW")
      */
@@ -48,11 +73,27 @@ class ProductController extends AbstractFOSRestController
      *     path = "/api/products",
      *     name = "app_products_show_list",
      * )
-     * @QueryParam(name="page", requirements="\d+", default="1", description="Page of the overview")
-     * @QueryParam(name="limit", requirements="\d+", default="10", description="Page of the overview")
+     * @QueryParam(name="page", requirements="\d+", default="1", description="Actual page of search")
+     * @QueryParam(name="limit", requirements="\d+", default="10", description="Maximum elements on search page")
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"products_show_list", "Default"},
+     * )
+     * @OA\Get (
+     *      description="Return paginated list of all phones stored in database"
+     * )
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns paginated products list",
+     *     @OA\JsonContent(ref=@Model(type=Product::class, groups={"products_show_list"}))
+     * )
+     * @OA\Response(
+     *     response=404,
+     *     description="Product not found"
+     * )
+     * @OA\Response(
+     *     response=401,
+     *     description="Unauthorized : user isn't connected"
      * )
      * @IsGranted("PRODUCTS_LIST")
      */

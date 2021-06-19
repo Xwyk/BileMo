@@ -9,11 +9,13 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks()
+ * @OA\Schema()
  * @Hateoas\Relation(
  *     "self",
  *     href = @Hateoas\Route(

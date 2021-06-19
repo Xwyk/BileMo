@@ -6,9 +6,11 @@ use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
+ * @OA\Schema()
  */
 class Address
 {

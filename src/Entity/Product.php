@@ -9,6 +9,8 @@ use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -23,6 +25,7 @@ use JMS\Serializer\Annotation\Groups;
  *     ),
  *     exclusion = @Hateoas\Exclusion(groups={"products_show_list"})
  * )
+ * @OA\Schema()
  */
 class Product
 {
@@ -32,6 +35,8 @@ class Product
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list"})
      * @Expose
+     * @var int
+     * @OA\Property(description="The unique identifier of the user.")
      */
     private $id;
 
