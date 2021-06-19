@@ -81,15 +81,15 @@ class Client implements UserInterface
     private $address;
 
     /**
-     * @Serializer\Type("integer")
-     * @ORM\Column(type="integer")
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=14)
      * @Expose
      */
     private $siret;
 
     /**
-     * @Serializer\Type("integer")
-     * @ORM\Column(type="integer")
+     * @Serializer\Type("string")
+     * @ORM\Column(type="string", length=9)
      * @Expose
      */
     private $siren;

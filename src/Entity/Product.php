@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  * @ExclusionPolicy("all")
  * @Hateoas\Relation(
  *     "self",
@@ -83,7 +84,7 @@ class Product
     private $battery;
 
     /**
-     * @Serializer\Type("DateTime")
+     * @Serializer\Type("DateTime<'Y-m-d', '', ['Y-m-d', 'Y/m/d']>")
      * @ORM\Column(type="datetime")
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
@@ -92,7 +93,7 @@ class Product
 
     /**
      * @Serializer\Type("DateTime")
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      * @Groups({"product_show_detail"})
      * @Expose
      */
@@ -210,6 +211,14 @@ class Product
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePerist()
+    {
+        $this->createdAt = new \DateTime();
     }
 
     public function getPrice(): ?int

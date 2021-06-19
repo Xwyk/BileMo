@@ -1,74 +1,250 @@
 [
   {
-    "name": "E.Leclerc",
-    "description": "Commerce de détail",
+    "name": "Client 1",
+    "description": "Client 1",
     "created_at": "2021-05-07T10:30:00+00:00",
     "users": [
       {
         "address": {
-          "number": 4,
-          "street": "Rue des vignerons",
-          "postal": "44860",
-          "city": "Pont-Saint-Martin",
+          "number": 1,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
           "country": "France"
         },
-        "first_name": "Florian",
-        "last_name": "LEBOUL",
-        "mail_address": "florianelboul@gmail.com",
-        "phone": "0605410616"
-      },
-      {
-        "address": {
-          "number": 4,
-          "street": "Rue des vignerons",
-          "postal": "44860",
-          "city": "Pont-Saint-Martin",
-          "country": "France"
-        },
-        "first_name": "Florian1",
-        "last_name": "LEBOUL",
-        "mail_address": "florianelboul@gmail.com",
+        "first_name": "User 1",
+        "last_name": "of Client 1",
+        "mail_address": "user1.1@gmail.com",
         "phone": "0601010101"
       },
       {
         "address": {
-          "number": 4,
-          "street": "Rue des vignerons",
-          "postal": "44860",
-          "city": "Pont-Saint-Martin",
+          "number": 2,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
           "country": "France"
         },
-        "first_name": "Florian2",
-        "last_name": "LEBOUL",
-        "mail_address": "florianelboul@gmail.com",
-        "phone": "0602020202"
+        "first_name": "User 2",
+        "last_name": "of Client 1",
+        "mail_address": "user2.1@gmail.com",
+        "phone": "0602020101"
+      },
+      {
+        "address": {
+          "number": 3,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 3",
+        "last_name": "of Client 1",
+        "mail_address": "user3.1@gmail.com",
+        "phone": "0603030101"
       },
       {
         "address": {
           "number": 4,
-          "street": "Rue des vignerons",
-          "postal": "44860",
-          "city": "Pont-Saint-Martin",
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
           "country": "France"
         },
-        "first_name": "Florian3",
-        "last_name": "LEBOUL",
-        "mail_address": "florianelboul@gmail.com",
-        "phone": "0603030303"
+        "first_name": "User 4",
+        "last_name": "of Client 1",
+        "mail_address": "user4.1@gmail.com",
+        "phone": "0604040101"
+      },
+      {
+        "address": {
+          "number": 5,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 5",
+        "last_name": "of Client 1",
+        "mail_address": "user5.1@gmail.com",
+        "phone": "0605050101"
+      },
+      {
+        "address": {
+          "number": 6,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 6",
+        "last_name": "of Client 1",
+        "mail_address": "user6.1@gmail.com",
+        "phone": "0606060101"
+      },
+      {
+        "address": {
+          "number": 7,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 7",
+        "last_name": "of Client 1",
+        "mail_address": "user7.1@gmail.com",
+        "phone": "0607070101"
+      },
+      {
+        "address": {
+          "number": 8,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 8",
+        "last_name": "of Client 1",
+        "mail_address": "user8.1@gmail.com",
+        "phone": "0608080101"
       }
     ],
     "username": "user1",
     "password": "$2y$10$w9SrHWXNEAvK/rvw0ldNceQo5lQJ9mJjd6p/mUiLi36D1pdhmrtDm",
     "address": {
-      "number": 4,
+      "number": 1,
       "adverb": null,
-      "street": "Rue des vignerons",
-      "postal": 44860,
-      "city": "Pont-Saint-Martin",
+      "street": "Rue des clients",
+      "postal": 44000,
+      "city": "Nantes",
       "country": "France"
     },
-    "siret": 1222,
-    "siren": 1222,
-    "tva": "1222"
+    "siret": "44224486000031",
+    "siren": "442244860",
+    "tva": "FR22442244860"
+  },
+  {
+    "name": "Client 1",
+    "description": "Client 1",
+    "created_at": "2021-05-07T10:30:00+00:00",
+    "users": [
+      {
+        "address": {
+          "number": 1,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 1",
+        "last_name": "of Client 2",
+        "mail_address": "user1.2@gmail.com",
+        "phone": "0601010202"
+      },
+      {
+        "address": {
+          "number": 2,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 2",
+        "last_name": "of Client 2",
+        "mail_address": "user2.2@gmail.com",
+        "phone": "0602020202"
+      },
+      {
+        "address": {
+          "number": 3,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 3",
+        "last_name": "of Client 2",
+        "mail_address": "user3.2@gmail.com",
+        "phone": "0603030202"
+      },
+      {
+        "address": {
+          "number": 4,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 4",
+        "last_name": "of Client 2",
+        "mail_address": "user4.2@gmail.com",
+        "phone": "0604040202"
+      },
+      {
+        "address": {
+          "number": 5,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 5",
+        "last_name": "of Client 2",
+        "mail_address": "user5.2@gmail.com",
+        "phone": "0605050202"
+      },
+      {
+        "address": {
+          "number": 6,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 6",
+        "last_name": "of Client 2",
+        "mail_address": "user6.2@gmail.com",
+        "phone": "0606060202"
+      },
+      {
+        "address": {
+          "number": 7,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 7",
+        "last_name": "of Client 2",
+        "mail_address": "user7.2@gmail.com",
+        "phone": "0607070202"
+      },
+      {
+        "address": {
+          "number": 8,
+          "street": "Rue des users",
+          "postal": "44000",
+          "city": "Nantes",
+          "country": "France"
+        },
+        "first_name": "User 8",
+        "last_name": "of Client 2",
+        "mail_address": "user8.2@gmail.com",
+        "phone": "0608080202"
+      }
+    ],
+    "username": "user2",
+    "password": "$2y$10$fj1moyVi4UVChyTxGmHfC..w.30nNN5q5DZDhtcEOrV0dNN4Uyz9i",
+    "address": {
+      "number": 2,
+      "adverb": null,
+      "street": "Rue des clients",
+      "postal": 44000,
+      "city": "Nantes",
+      "country": "France"
+    },
+    "siret": "44229377500031",
+    "siren": "442293775",
+    "tva": "FR22442293775"
   }
 ]
