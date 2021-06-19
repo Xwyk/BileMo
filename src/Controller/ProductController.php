@@ -85,7 +85,15 @@ class ProductController extends AbstractFOSRestController
      * @OA\Response(
      *     response=200,
      *     description="Returns paginated products list",
-     *     @OA\JsonContent(ref=@Model(type=Product::class, groups={"products_show_list"}))
+     *     @OA\JsonContent(
+     *         type="array",
+     *         @OA\Items(
+     *             ref=@Model(
+     *                 type=Product::class,
+     *                 groups={"products_show_list", "Default"},
+     *             )
+     *         )
+     *     )
      * )
      * @OA\Response(
      *     response=404,

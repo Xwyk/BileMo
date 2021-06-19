@@ -36,7 +36,7 @@ class Product
      * @Groups({"products_show_list"})
      * @Expose
      * @var int
-     * @OA\Property(description="The unique identifier of the user.")
+     * @OA\Property(description="Unique identifier of Product")
      */
     private $id;
 

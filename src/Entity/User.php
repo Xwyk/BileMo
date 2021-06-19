@@ -15,7 +15,9 @@ use OpenApi\Annotations as OA;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks()
- * @OA\Schema()
+ * @OA\Schema(
+ *     description="bitebite"
+ * )
  * @Hateoas\Relation(
  *     "self",
  *     href = @Hateoas\Route(
@@ -53,6 +55,8 @@ class User
      * @ORM\Column(type="integer")
      * @Groups({"users_show_client_list"})
      * @Expose
+     * @var int
+     * @OA\Property(description="Unique identifier of User")
      */
     private $id;
 

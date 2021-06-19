@@ -4,6 +4,57 @@ nelmio_api_doc:
             title: BileMo
             description: BileMo is an API that allows to get mobile phones list/detail for authenticated clients, and client's associated users in JSON format
             version: 1.0.0
+        paths:
+            /artists:
+                get:
+                    description: Returns a list of artists
+                    #  ----- Added lines  ----------------------------------------
+                    parameters:
+                        - name: limit
+                          in: query
+                          description: Limits the number of items on a page
+                          schema:
+                              type: integer
+                        - name: offset
+                          in: query
+                          description: Specifies the page number of the artists to be displayed
+                          schema:
+                              type: integer
+                    #  ---- /Added lines  ----------------------------------------
+
+                    responses:
+                        '200':
+                            description: Successfully returned a list of artists
+                            content:
+                                application/json:
+                                    schema:
+                                        type: array
+                                        items:
+                                            type: object
+                                            required:
+                                                - username
+                                            properties:
+                                                artist_name:
+                                                    type: string
+                                                artist_genre:
+                                                    type: string
+                                                albums_recorded:
+                                                    type: integer
+                                                username:
+                                                    type: string
+
+                        '400':
+                            description: Invalid request
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            message:
+                                                type: string
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+            - ^/api(?!/doc.json$) # Accepts routes under /api except /api/doc
+#        host_patterns:
+#            - ^/api/*
