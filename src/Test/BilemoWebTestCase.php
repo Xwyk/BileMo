@@ -11,7 +11,7 @@ abstract class BilemoWebTestCase extends WebTestCase implements BilemoWebTestCas
     protected $token;
     protected $tests;
 
-    public function entryPoint(string $name, string $type, string $url, int $expectedCode, array $parameters = [], array $files = [], array $server = [], string $content = "", bool $needReturnOnOK = false)
+    public function entryPoint(string $type, string $url, int $expectedCode, array $parameters = [], array $files = [], array $server = [], string $content = "", bool $needReturnOnOK = false)
     {
         self::ensureKernelShutdown();
         $client = self::createClient();
@@ -29,42 +29,38 @@ abstract class BilemoWebTestCase extends WebTestCase implements BilemoWebTestCas
             null;
     }
 
-    public function testEntryPoints(): void
+    /**
+     * @dataProvider loadEntryPoints
+     */
+    public function testEntryPoints($test): void
     {
-        if (!isset($this->tests)) {
-            $this->loadEntryPoints();
+        if (!isset($this->token) && $test['authenticated']){
+            $this->setToken();
         }
-        foreach ($this->tests as $test) {
-            if (!isset($this->token) && $test['authenticated']){
-                $this->setToken();
-            }
-            $result = $this->entryPoint(
-                $test['name'],
-                $test['type'],
-                $test['url'],
-                $test['expectedCode'],
-                $test['parameters'],
-                $test['files'],
-                array_merge(
-                    $test['server'],
-                    [
-                        'CONTENT_TYPE' => 'application/json',
-                    ],
-                    ($test['authenticated']) ? ["HTTP_AUTHORIZATION" => "Bearer " . $this->token] : []),
-                $test['content'],
-                $test['needReturnOnOK']
-            );
-            if ($test['needReturnOnOK'] && isset($test['additionalCheck'])) {
-                $method = $test['additionalCheck'];
-                $this->$method($result);
-            }
+        $result = $this->entryPoint(
+            $test['type'],
+            $test['url'],
+            $test['expectedCode'],
+            $test['parameters'],
+            $test['files'],
+            array_merge(
+                $test['server'],
+                [
+                    'CONTENT_TYPE' => 'application/json',
+                ],
+                ($test['authenticated']) ? ["HTTP_AUTHORIZATION" => "Bearer " . $this->token] : []),
+            $test['content'],
+            $test['needReturnOnOK']
+        );
+        if ($test['needReturnOnOK'] && isset($test['additionalCheck'])) {
+            $method = $test['additionalCheck'];
+            $this->$method($result);
         }
     }
 
     public function setToken()
     {
         $this->token = $this->entryPoint(
-            "login",
             "POST",
             "/api/login_check",
             Response::HTTP_OK,

@@ -8,14 +8,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserControllerTest extends BilemoWebTestCase
 {
-    protected $testUser;
-    protected $userForClient1;
-    protected $userIdForClient1 = 1;
-    protected $userIdForClient2 = 9;
-
-    public function loadEntryPoints(): void
-    {
-        $this->userForClient1 = array(
+    protected $testUser = array(
+        "address"  => [
+            "number"=> 4,
+            "street"=> "Rue des vignerons",
+            "postal"=> "44860",
+            "city"=> "Pont-Saint-Martin",
+            "country"=> "France"
+        ],
+        "first_name"=> "Florian",
+        "last_name"=> "LEBOUL",
+        "mail_address"=> "phpunit@test.com",
+        "phone"=> "0605410616"
+    );
+    protected $userForClient1 = array(
             "address" => array(
                 "number"  => 1,
                 "street"  => "Rue des users",
@@ -28,143 +34,145 @@ class UserControllerTest extends BilemoWebTestCase
             "mail_address" => "user1.1@gmail.com",
             "phone"        => "0601010101"
         );
-        $this->testUser = array(
-            "address"  => [
-                "number"=> 4,
-                "street"=> "Rue des vignerons",
-                "postal"=> "44860",
-                "city"=> "Pont-Saint-Martin",
-                "country"=> "France"
+    protected $userIdForClient1 = 1;
+    protected $userIdForClient2 = 9;
+
+    public function loadEntryPoints(): array
+    {
+        return [
+            "testShowDetailsUnauthenticated" => [
+                [
+                    "type"           => "GET",
+                    "url"            => "/api/users/".$this->userIdForClient1,
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => false,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false
+                ]
             ],
-            "first_name"=> "Florian",
-            "last_name"=> "LEBOUL",
-            "mail_address"=> "phpunit@test.com",
-            "phone"=> "0605410616"
-        );
-        $this->tests = [
-            [
-                "name"           => "testShowDetailsUnauthenticated",
-                "type"           => "GET",
-                "url"            => "/api/users/".$this->userIdForClient1,
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => false,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
-                "needReturnOnOK" => false
+            "testShowDetailsAuthenticated" => [
+                [
+                    "type"           => "GET",
+                    "url"            => "/api/users/".$this->userIdForClient1,
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => true,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_OK,
+                    "needReturnOnOK" => true,
+                    "additionalCheck"=> "checkShowDetailsAuthenticated"
+                ]
             ],
-            [
-                "name"           => "testShowDetailsAuthenticated",
-                "type"           => "GET",
-                "url"            => "/api/users/".$this->userIdForClient1,
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => true,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_OK,
-                "needReturnOnOK" => true,
-                "additionalCheck"=> "checkShowDetailsAuthenticated"
+            "testShowDetailsWrongAuthenticated" => [
+                [
+                    "type"           => "GET",
+                    "url"            => "/api/users/".$this->userIdForClient2,
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => true,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_FORBIDDEN,
+                    "needReturnOnOK" => false
+                ]
             ],
-            [
-                "name"           => "testShowDetailsWrongAuthenticated",
-                "type"           => "GET",
-                "url"            => "/api/users/".$this->userIdForClient2,
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => true,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_FORBIDDEN,
-                "needReturnOnOK" => false
+            "testShowListUnauthenticated" => [
+                [
+                    "type"           => "GET",
+                    "url"            => "/api/users",
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => false,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false
+                ]
             ],
-            [
-                "name"           => "testShowListUnauthenticated",
-                "type"           => "GET",
-                "url"            => "/api/users",
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => false,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
-                "needReturnOnOK" => false
+            "testShowListAuthenticated" => [
+                [
+                    "type"           => "GET",
+                    "url"            => "/api/users",
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => true,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_OK,
+                    "needReturnOnOK" => true,
+                    "additionalCheck"=> "checkShowListAuthenticated"
+                ]
             ],
-            [
-                "name"           => "testShowListAuthenticated",
-                "type"           => "GET",
-                "url"            => "/api/users",
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => true,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_OK,
-                "needReturnOnOK" => true,
-                "additionalCheck"=> "checkShowListAuthenticated"
+            "testCreateUnauthenticated" => [
+                [
+                    "type"           => "POST",
+                    "url"            => "/api/users",
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => false,
+                    "content"        => json_encode($this->testUser),
+                    "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false
+                ]
             ],
-            [
-                "name"           => "testCreateUnauthenticated",
-                "type"           => "POST",
-                "url"            => "/api/users",
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => false,
-                "content"        => json_encode($this->testUser),
-                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
-                "needReturnOnOK" => false
+            "testCreateAuthenticated" => [
+                [
+                    "type"           => "POST",
+                    "url"            => "/api/users",
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => true,
+                    "content"        => json_encode($this->testUser),
+                    "expectedCode"   => Response::HTTP_CREATED,
+                    "needReturnOnOK" => true,
+                    "additionalCheck"=> "checkCreateAuthenticated"
+                ]
             ],
-            [
-                "name"           => "testCreateAuthenticated",
-                "type"           => "POST",
-                "url"            => "/api/users",
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => true,
-                "content"        => json_encode($this->testUser),
-                "expectedCode"   => Response::HTTP_CREATED,
-                "needReturnOnOK" => true,
-                "additionalCheck"=> "checkCreateAuthenticated"
+            "testDeleteUnauthenticated" => [
+                [
+                    "type"           => "DELETE",
+                    "url"            => "/api/users/".$this->userIdForClient1,
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => false,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false
+                ]
             ],
-            [
-                "name"           => "testDeleteUnauthenticated",
-                "type"           => "DELETE",
-                "url"            => "/api/users/".$this->userIdForClient1,
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => false,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_UNAUTHORIZED,
-                "needReturnOnOK" => false
+            "testDeleteWrongAuthenticated" => [
+                [
+                    "type"           => "DELETE",
+                    "url"            => "/api/users/".$this->userIdForClient2,
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => true,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_FORBIDDEN,
+                    "needReturnOnOK" => false
+                ]
             ],
-            [
-                "name"           => "testDeleteWrongAuthenticated",
-                "type"           => "DELETE",
-                "url"            => "/api/users/".$this->userIdForClient2,
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => true,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_FORBIDDEN,
-                "needReturnOnOK" => false
-            ],
-            [
-                "name"           => "testDeleteAuthenticated",
-                "type"           => "DELETE",
-                "url"            => "/api/users/".$this->userIdForClient1,
-                "parameters"     => [],
-                "files"          => [],
-                "server"         => [],
-                "authenticated"  => true,
-                "content"        => "",
-                "expectedCode"   => Response::HTTP_OK,
-                "needReturnOnOK" => true,
-                "additionalCheck"=> "checkDeleteAuthenticated"
+            "testDeleteAuthenticated" => [
+                [
+                    "type"           => "DELETE",
+                    "url"            => "/api/users/".$this->userIdForClient1,
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => true,
+                    "content"        => "",
+                    "expectedCode"   => Response::HTTP_OK,
+                    "needReturnOnOK" => true,
+                    "additionalCheck"=> "checkDeleteAuthenticated"
+                ]
             ]
         ];
     }
@@ -184,8 +192,8 @@ class UserControllerTest extends BilemoWebTestCase
 
         $this->checkAttributes(
             (json_decode(json_encode($usersList[0]), true)),
-            (json_decode(json_encode($firstUserInList), true)),
-            "checkShowListAuthenticated");
+            (json_decode(json_encode($firstUserInList), true))
+        );
 
         foreach ($usersList as $resultUser){
             $this->checkLinks($resultUser, ['create', 'delete', 'self']);
@@ -201,8 +209,8 @@ class UserControllerTest extends BilemoWebTestCase
     protected function checkCreateAuthenticated($result){
         $this->checkAttributes(
             (json_decode(json_encode($result), true)),
-            (json_decode(json_encode($this->testUser), true)),
-            "checkCreateAuthenticated");
+            (json_decode(json_encode($this->testUser), true))
+        );
         $this->checkLinks($result, ['create', 'delete']);
     }
 
@@ -228,8 +236,8 @@ class UserControllerTest extends BilemoWebTestCase
     protected function checkShowDetailsAuthenticated($result){
         $this->checkAttributes(
             (json_decode(json_encode($result), true)),
-            (json_decode(json_encode($this->userForClient1), true)),
-            "checkShowDetailsAuthenticated");
+            (json_decode(json_encode($this->userForClient1), true))
+        );
         $this->checkLinks($result, ['create', 'delete']);
     }
 
@@ -250,15 +258,15 @@ class UserControllerTest extends BilemoWebTestCase
      * @param array $result
      * @param array $toCompare
      */
-    protected function checkAttributes(array $result, array $toCompare, string $name){
+    protected function checkAttributes(array $result, array $toCompare){
         foreach ($toCompare as $attribute => $value){
             // If $value is an array, enter in the recursive world
             if (is_array($value)){
-                $this->checkAttributes($result[$attribute], $value, $name);
+                $this->checkAttributes($result[$attribute], $value);
                 // Once all array attributes are checked, continue with next parent's attribute
                 continue;
             }
-            $this->assertEquals($value, $result[$attribute], "Failed on ".$name." at ".$attribute);
+            $this->assertEquals($value, $result[$attribute], "Failed on attribute ".$attribute);
         }
     }
 }
