@@ -71,6 +71,10 @@
             "symfony console d:m:m -n --env=test",
             "symfony console d:f:l -n --env=test"
         ],
+        "launchTests": [
+            "composer resetForTest",
+            ".\\vendor\\bin\\phpunit --testdox"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
