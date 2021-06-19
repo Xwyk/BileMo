@@ -6,7 +6,7 @@
     "rom": 12,
     "ram": 12,
     "battery": 12,
-    "launched_at": "2021/05/27",
+    "launched_at": "2021-05-27",
     "price": 200
   },
   {
@@ -16,7 +16,7 @@
     "rom": 12,
     "ram": 12,
     "battery": 12,
-    "launched_at": "2021/05/27",
+    "launched_at": "2021-05-27",
     "price": 200
   },
   {
@@ -26,7 +26,7 @@
     "rom": 12,
     "ram": 12,
     "battery": 12,
-    "launched_at": "2021/05/27",
+    "launched_at": "2021-05-27",
     "price": 200
   }
 ]
