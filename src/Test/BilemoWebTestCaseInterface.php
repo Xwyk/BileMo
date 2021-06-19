@@ -5,10 +5,9 @@ namespace App\Test;
 
 interface BilemoWebTestCaseInterface
 {
-    public function loadEntryPoints():void;
-    public function testEntryPoints();
+    public function loadEntryPoints():array;
+    public function testEntryPoints(array $test);
     public function entryPoint(
-        string $name,
         string $type,
         string $url,
         int $expectedCode,
