@@ -39,7 +39,8 @@ class UserController extends AbstractFOSRestController
      *     }
      * )
      * @OA\Post  (
-     *      description="Create new user for current connected client"
+     *     description="Create new user for current connected client",
+     *     tags={"User", "Create", "POST"}
      * )
      * @OA\Response(
      *     response=201,
@@ -134,7 +135,8 @@ class UserController extends AbstractFOSRestController
      * )
      *
      * @OA\Get  (
-     *      description="Return informations about user that correspond to passed id, if user belong to connected client"
+     *     description="Return informations about user that correspond to passed id, if user belong to connected client",
+     *     tags={"User", "Show", "GET"}
      * )
      * @OA\Response(
      *     response=201,
@@ -217,7 +219,8 @@ class UserController extends AbstractFOSRestController
      * )
      *
      * @OA\Get (
-     *      description="Return paginated list of all users stored for connected user"
+     *     description="Return paginated list of all users stored for connected user",
+     *     tags={"User", "List", "GET"}
      * )
      * @OA\Response(
      *     response=200,
@@ -361,7 +364,8 @@ class UserController extends AbstractFOSRestController
      *     })
      *
      * @OA\Delete  (
-     *      description="Delete user passed by id if belongs to connected client"
+     *     description="Delete user passed by id if belongs to connected client",
+     *     tags={"User", "Delete", "DELETE"}
      * )
      * @OA\Response(
      *     response=200,

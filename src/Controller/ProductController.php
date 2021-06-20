@@ -37,6 +37,7 @@ class ProductController extends AbstractFOSRestController
      * )
      * @OA\Get (
      *     description="Return informations about phone that correspond to passed id.",
+     *     tags={"Product", "Show", "GET"}
      * )
      *
      * @OA\Response(
@@ -110,7 +111,8 @@ class ProductController extends AbstractFOSRestController
      *     serializerGroups={"products_show_list", "Default"},
      * )
      * @OA\Get (
-     *      description="Return paginated list of all phones stored in database"
+     *     description="Return paginated list of all phones stored in database",
+     *     tags={"Product", "List", "GET"},
      * )
      * @OA\Response(
      *     response=200,
@@ -218,7 +220,6 @@ class ProductController extends AbstractFOSRestController
         $total = count($list);
         // Number of pages
         $pages = (int)ceil($total / $limit);
-
 
         return new PaginatedRepresentation(
             new CollectionRepresentation($list),

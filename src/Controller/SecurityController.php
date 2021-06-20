@@ -15,7 +15,8 @@ class SecurityController extends AbstractController
      *     name = "api_login",
      * )
      * @OA\Post  (
-     *      description="Authenticate user on app and return JWT token who could be used for bearer authentication"
+     *     description="Authenticate user on app and return JWT token who could be used for bearer authentication",
+     *     tags={"Authentication", "POST"}
      * )
      * @OA\Response(
      *     response=200,
