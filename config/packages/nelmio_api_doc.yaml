@@ -2,59 +2,25 @@ nelmio_api_doc:
     documentation:
         info:
             title: BileMo
-            description: BileMo is an API that allows to get mobile phones list/detail for authenticated clients, and client's associated users in JSON format
+            description: BileMo is an API that allows to get mobile phones list/detail for authenticated clients, and client's associated users in JSON format.<br>View code on <a href="https://github.com/Xwyk/bilemo">GitHub</a>
             version: 1.0.0
-        paths:
-            /artists:
-                get:
-                    description: Returns a list of artists
-                    #  ----- Added lines  ----------------------------------------
-                    parameters:
-                        - name: limit
-                          in: query
-                          description: Limits the number of items on a page
-                          schema:
-                              type: integer
-                        - name: offset
-                          in: query
-                          description: Specifies the page number of the artists to be displayed
-                          schema:
-                              type: integer
-                    #  ---- /Added lines  ----------------------------------------
-
-                    responses:
-                        '200':
-                            description: Successfully returned a list of artists
-                            content:
-                                application/json:
-                                    schema:
-                                        type: array
-                                        items:
-                                            type: object
-                                            required:
-                                                - username
-                                            properties:
-                                                artist_name:
-                                                    type: string
-                                                artist_genre:
-                                                    type: string
-                                                albums_recorded:
-                                                    type: integer
-                                                username:
-                                                    type: string
-
-                        '400':
-                            description: Invalid request
-                            content:
-                                application/json:
-                                    schema:
-                                        type: object
-                                        properties:
-                                            message:
-                                                type: string
+        components:
+            securitySchemes:
+                bearerAuth: # arbitrary name for the security scheme
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+        security:
+            - bearerAuth: [ ]
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
-            - ^/api(?!/doc.json$) # Accepts routes under /api except /api/doc
-#        host_patterns:
-#            - ^/api/*
+    models:
+        names:
+            - { alias: User_Create,        type: App\Entity\User, groups: [create] }
+            - { alias: User,  type: App\Entity\User, groups: [ user_show_detail,Default ] }
+            - { alias: User_List, type: App\Entity\User, groups: [ users_show_client_list,Default ] }
+            - { alias: Address_Create, type: App\Entity\Address, groups: [ create ] }
+#            - { alias: Address_Show, type: App\Entity\Address, groups: [ user_show_detail ] }
+            - { alias: Product, type: App\Entity\Product, groups: [ product_show_detail,Default ] }
+            - { alias: Product_List, type: App\Entity\Product, groups: [ products_show_list,Default ] }
