@@ -11,11 +11,16 @@ nelmio_api_doc:
                 name: Apache 2.0
                 url: http://www.apache.org/licenses/LICENSE-2.0.html
         servers:
+          - url: http://127.0.0.1:{port}
+            description: The production API server
+            variables:
+              port:
+                default: '8000'
           - url: http://localhost:{port}
             description: The production API server
             variables:
-                port:
-                    default: '8000'
+              port:
+                default: '8000'
         tags:
             - name: "Authentication"
               description: "Application authentication"
