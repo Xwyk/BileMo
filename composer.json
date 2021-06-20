@@ -74,6 +74,13 @@
             "symfony console d:m:m -n",
             "symfony console d:f:l -n"
         ],
+        "initProject": [
+            "symfony console d:d:d --if-exists -f",
+            "symfony console d:d:c",
+            "symfony console d:m:m -n",
+            "symfony console d:f:l -n",
+            "symfony server:ca:install"
+        ],
         "resetForTest": [
             "symfony console d:d:d --env=test --if-exists -f",
             "symfony console d:d:c --env=test",
