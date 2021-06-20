@@ -25,7 +25,7 @@ use OpenApi\Annotations as OA;
  *     ),
  *     exclusion = @Hateoas\Exclusion(groups={"products_show_list"})
  * )
- * @OA\Schema()
+ * @OA\Schema(description="Mobile phone stored in database, viewable by authenticated clients")
  */
 class Product
 {
@@ -45,6 +45,8 @@ class Product
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's brand", example="Huawei")
      */
     private $brand;
 
@@ -53,6 +55,8 @@ class Product
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's commercial name", example="P20 Lite")
      */
     private $commercialName;
 
@@ -61,6 +65,8 @@ class Product
      * @ORM\Column(type="string", length=32)
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's model", example="ANE-LX1")
      */
     private $model;
 
@@ -69,6 +75,8 @@ class Product
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var int
+     * @OA\Property(description="Phone's ROM memory quantity, in Go", example="64")
      */
     private $rom;
 
@@ -77,6 +85,8 @@ class Product
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var int
+     * @OA\Property(description="Phone's RAM memory quantity, in Go", example="4")
      */
     private $ram;
 
@@ -85,6 +95,8 @@ class Product
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's battery capacity, in mAh", example="3000")
      */
     private $battery;
 
@@ -93,6 +105,8 @@ class Product
      * @ORM\Column(type="datetime")
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's release date", example="2018-05-27")
      */
     private $launchedAt;
 
@@ -101,6 +115,8 @@ class Product
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      * @Groups({"product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's creation date in database", example="2021-06-19T08:37:42+00:00")
      */
     private $createdAt;
 
@@ -109,6 +125,8 @@ class Product
      * @ORM\Column(type="integer")
      * @Groups({"products_show_list", "product_show_detail"})
      * @Expose
+     * @var string
+     * @OA\Property(description="Phone's price, in € (euro)", example="199")
      */
     private $price;
 

@@ -10,13 +10,14 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks()
  * @OA\Schema(
- *     description="bitebite"
+ *     description="Define client's client. An user is a client of app client (Client class). B2B model",
  * )
  * @Hateoas\Relation(
  *     "self",
@@ -65,13 +66,18 @@ class User
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"nodisplay"})
      * @Expose
+     * @var Client
+     * @OA\Property(description="User's client")
      */
     private $client;
 
     /**
+     * @Serializer\Type("DateTime<'Y-m-d', '', ['Y-m-d', 'Y/m/d']>")
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
-     * @Groups({"users_show_client_list", "user_show_detail", "create"})
+     * @Groups({"users_show_client_list", "user_show_detail"})
      * @Expose
+     * @var DateTime
+     * @OA\Property(description="User's creation date", example="2021-06-19T08:37:42+00:00")
      */
     private $createdAt;
 
@@ -81,6 +87,8 @@ class User
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"user_show_detail", "create"})
      * @Expose
+     * @var Address
+     * @OA\Property(description="User's address")
      */
     private $address;
 
@@ -89,6 +97,8 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's first name", example="Florian")
      */
     private $firstName;
 
@@ -97,6 +107,8 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's last name", example="LEBOUL")
      */
     private $lastName;
 
@@ -105,6 +117,8 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's mail address", example="florianleboul@gmail.com")
      */
     private $mailAddress;
 
@@ -113,6 +127,8 @@ class User
      * @ORM\Column(type="string", length=20, nullable=true)
      * @Groups({"user_show_detail", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's phone number", example="06 05 41 06 16")
      */
     private $phone;
 

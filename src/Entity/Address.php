@@ -10,7 +10,7 @@ use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
- * @OA\Schema()
+ * @OA\Schema(description="Address object, to define residence of client or user")
  */
 class Address
 {
@@ -18,48 +18,62 @@ class Address
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int
+     * @OA\Property(description="Unique identifier of Address")
      */
     private $id;
 
     /**
      * @Serializer\Type("integer")
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
+     * @var int
+     * @OA\Property(description="Number of address", example=55)
      */
     private $number;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=16, nullable=true)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
+     * @var string
+     * @OA\Property(description="Adverb (bis, ter ...)")
      */
     private $adverb;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
+     * @var string
+     * @OA\Property(description="Street of address", example="Rue du Faubourg Saint-Honoré")
      */
     private $street;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string")
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
+     * @var string
+     * @OA\Property(description="Postal code of address", example="75008")
      */
     private $postal;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
+     * @var string
+     * @OA\Property(description="City of residence", example="Paris")
      */
     private $city;
 
     /**
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user_show_detail", "users_show_client_list"})
+     * @Groups({"user_show_detail", "users_show_client_list", "create"})
+     * @var string
+     * @OA\Property(description="Country of residence", example="France")
      */
     private $country;
 
