@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
  *     "self",
  *     href = @Hateoas\Route(
  *         "app_user_show_details",
- *         parameters = {"userId"="expr(object.getId())"},
+ *         parameters = {"id"="expr(object.getId())"},
  *         absolute = true
  *     ),
  *     exclusion = @Hateoas\Exclusion(groups={"users_show_client_list"})
@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
  *     "delete",
  *     href = @Hateoas\Route(
  *         "app_client_del_user",
- *         parameters = {"userId"="expr(object.getId())"},
+ *         parameters = {"id"="expr(object.getId())"},
  *         absolute = true
  *     ),
  *     exclusion = @Hateoas\Exclusion(groups={"users_show_client_list", "user_show_detail"})

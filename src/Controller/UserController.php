@@ -44,7 +44,7 @@ class UserController extends AbstractFOSRestController
      * )
      * @OA\Response(
      *     response=201,
-     *     description="User created",
+     *     description="User successfully created",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -84,7 +84,7 @@ class UserController extends AbstractFOSRestController
      * )
      * @OA\Response(
      *     response=401,
-     *     description="Forbidden : JWT token is expired / not found",
+     *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -92,12 +92,12 @@ class UserController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 401,
@@ -122,25 +122,34 @@ class UserController extends AbstractFOSRestController
     }
     /**
      * @Rest\Get(
-     *     path = "/api/users/{userId}",
+     *     path = "/api/users/{id}",
      *     name = "app_user_show_details",
      *     requirements = {
-     *         "userId"="\d+"
+     *         "id"="\d+"
      *     },
      * )
-     * @ParamConverter("user", options={"mapping": {"userId" : "id"}})
      * @Rest\View(
      *     statusCode=200,
      *     serializerGroups={"user_show_detail"},
+     *
      * )
      *
      * @OA\Get  (
-     *     description="Return informations about user that correspond to passed id, if user belong to connected client",
-     *     tags={"User", "Show", "GET"}
+     *     description="Get informations about user that correspond to passed id, if user belong to connected client",
+     *     tags={"User", "Show", "GET"},
+     *     @OA\Parameter (
+     *         in="path",
+     *         name="id",
+     *         @OA\Schema (type="integer"),
+     *         required="true",
+     *         description="User id which to get details about",
+     *         example=1
+     *     ),
      * )
+     *
      * @OA\Response(
      *     response=201,
-     *     description="Get user detail",
+     *     description="Get user details",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -171,11 +180,10 @@ class UserController extends AbstractFOSRestController
      *         )
      *     }
      * )
-     * @TODO 404
-     * @TODO 403
+     *
      * @OA\Response(
      *     response=401,
-     *     description="Forbidden : JWT token is expired / not found",
+     *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -183,16 +191,68 @@ class UserController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 401,
      *                     "message": "JWT Token not found",
+     *                 }
+     *             )
+     *         )
+     *     }
+     * )
+     *
+     * @OA\Response(
+     *     response=403,
+     *     description="Forbidden access to ressource. Connected user isn't allowed to acces to this ressource.",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="Error response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Error response message"
+     *                 ),
+     *                 example={
+     *                     "code": 403,
+     *                     "message": "Forbidden",
+     *                 }
+     *             )
+     *         )
+     *     }
+     * )
+     *
+     * @OA\Response(
+     *     response=404,
+     *     description="User not found. No user correspond to passed id is stored in database",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="Error response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Error response message"
+     *                 ),
+     *                 example={
+     *                     "code": 404,
+     *                     "message": "Not found",
      *                 }
      *             )
      *         )
@@ -219,9 +279,10 @@ class UserController extends AbstractFOSRestController
      * )
      *
      * @OA\Get (
-     *     description="Return paginated list of all users stored for connected user",
+     *     description="Get paginated list of all users stored for connected user",
      *     tags={"User", "List", "GET"}
      * )
+     *
      * @OA\Response(
      *     response=200,
      *     description="Returns paginated users list",
@@ -287,10 +348,10 @@ class UserController extends AbstractFOSRestController
      *          }
      *      )
      * )
-     * @TODO 404
+     *
      * @OA\Response(
      *     response=401,
-     *     description="Forbidden : JWT token is expired / not found",
+     *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -298,12 +359,12 @@ class UserController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 401,
@@ -349,27 +410,28 @@ class UserController extends AbstractFOSRestController
 
     /**
      * @Rest\Delete(
-     *     path = "/api/users/{userId}",
+     *     path = "/api/users/{id}",
      *     name = "app_client_del_user",
      *     requirements = {
-     *         "userId"="\d+"
+     *         "id"="\d+"
      *     },
      * )
-     * @ParamConverter(
-     *     "user",
-     *     options = {
-     *         "mapping": {
-     *             "userId" : "id"
-     *         }
-     *     })
      *
      * @OA\Delete  (
      *     description="Delete user passed by id if belongs to connected client",
-     *     tags={"User", "Delete", "DELETE"}
+     *     tags={"User", "Delete", "DELETE"},
+     *     @OA\Parameter (
+     *         in="path",
+     *         name="id",
+     *         @OA\Schema (type="integer"),
+     *         required="true",
+     *         description="User id which to delete",
+     *         example=1
+     *     ),
      * )
      * @OA\Response(
      *     response=200,
-     *     description="User deleted",
+     *     description="User successfully deleted from client's users list.",
      *     content={
      *         @OA\MediaType(
      *             mediaType="text/plain",
@@ -382,7 +444,7 @@ class UserController extends AbstractFOSRestController
      * )
      * @OA\Response(
      *     response=401,
-     *     description="Forbidden : JWT token is expired / not found / ",
+     *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -390,12 +452,12 @@ class UserController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 401,
@@ -408,7 +470,7 @@ class UserController extends AbstractFOSRestController
      *
      * @OA\Response(
      *     response=403,
-     *     description="Unathorized : User doesn't belong to client",
+     *     description="Forbidden access to ressource. Connected user isn't allowed to acces to this ressource.",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -416,22 +478,47 @@ class UserController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 403,
-     *                     "message": "Access denied",
+     *                     "message": "Forbidden",
      *                 }
      *             )
      *         )
      *     }
      * )
      *
+     * @OA\Response(
+     *     response=404,
+     *     description="User not found. No user correspond to passed id is stored in database",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="Error response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Error response message"
+     *                 ),
+     *                 example={
+     *                     "code": 404,
+     *                     "message": "Not found",
+     *                 }
+     *             )
+     *         )
+     *     }
+     * )
      * @IsGranted("USER_DELETE", subject="user")
      */
     public function delete(User $user, EntityManagerInterface $manager): View
