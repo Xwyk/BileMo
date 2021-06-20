@@ -21,4 +21,4 @@ fos_rest:
         enabled: true
         header_name: X-Accept-Version
   exception:
-    enabled: true
+    enabled: false
