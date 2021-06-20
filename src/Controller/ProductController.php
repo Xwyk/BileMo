@@ -36,20 +36,29 @@ class ProductController extends AbstractFOSRestController
      *     serializerGroups={"product_show_detail"},
      * )
      * @OA\Get (
-     *      description="Return informations about phone that correspond to passed id."
+     *     description="Return informations about phone that correspond to passed id.",
      * )
-     * @OA\Parameter(
-     *     name="id",
-     *     in="path",
-     *     description="Product id to get information about",
-     *     @OA\Schema(type="int"),
-     *     required=true
      *
-     * )
      * @OA\Response(
      *     response=200,
      *     description="Returns products details",
-     *     @OA\JsonContent(ref=@Model(type=Product::class, groups={"product_show_detail"}))
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(ref="#/components/schemas/User"),
+     *             example={
+     *                 "brand": "Huawei",
+     *                 "commercial_name": "P20 Lite",
+     *                 "model": "Ane-LX1",
+     *                 "rom": 64,
+     *                 "ram": 4,
+     *                 "battery": 3000,
+     *                 "launched_at": "2021-05-27",
+     *                 "created_at": "2021-06-19T08:37:42+00:00",
+     *                 "price": 199
+     *             }
+     *         )
+     *     }
      * )
      *
      * @OA\Response(
@@ -58,7 +67,28 @@ class ProductController extends AbstractFOSRestController
      * )
      * @OA\Response(
      *     response=401,
-     *     description="Unauthorized : user isn't connected"
+     *     description="Forbidden : JWT token is expired / not found",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="The response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="The response message"
+     *                 ),
+     *                 example={
+     *                     "code": 401,
+     *                     "message": "JWT Token not found",
+     *                 }
+     *             )
+     *         )
+     *     }
      * )
      * @IsGranted("PRODUCT_SHOW")
      */
@@ -87,12 +117,60 @@ class ProductController extends AbstractFOSRestController
      *     description="Returns paginated products list",
      *     @OA\JsonContent(
      *         type="array",
-     *         @OA\Items(
-     *             ref=@Model(
-     *                 type=Product::class,
-     *                 groups={"products_show_list", "Default"},
-     *             )
-     *         )
+     *         @OA\Items(ref="#/components/schemas/Product_List"),
+     *         example={
+     *             "page": 1,
+     *             "limit": 10,
+     *             "pages": 1,
+     *             "total": 3,
+     *             "_links": {
+     *                 "self": {
+     *                     "href": "http://127.0.0.1:8000/api/products?page=1&limit=10"
+     *                 },
+     *                 "first": {
+     *                     "href": "http://127.0.0.1:8000/api/products?page=1&limit=10"
+     *                 },
+     *                 "last": {
+     *                     "href": "http://127.0.0.1:8000/api/products?page=1&limit=10"
+     *                 }
+     *             },
+     *             "_embedded": {
+     *                 "items": {
+     *                     {
+     *                         "id": 1,
+     *                         "brand": "Huawei",
+     *                         "commercial_name": "b",
+     *                         "model": "b",
+     *                         "rom": 12,
+     *                         "ram": 12,
+     *                         "battery": 12,
+     *                         "launched_at": "2021-05-27",
+     *                         "price": 200,
+     *                         "_links": {
+     *                             "self": {
+     *                                 "href": "http://127.0.0.1:8000/api/products/1"
+     *                             }
+     *                         }
+     *                     },
+     *                     {
+     *                         "id": 2,
+     *                         "brand": "Huawei",
+     *                         "commercial_name": "c",
+     *                         "model": "c",
+     *                         "rom": 12,
+     *                         "ram": 12,
+     *                         "battery": 12,
+     *                         "launched_at": "2021-05-27",
+     *                         "price": 200,
+     *                         "_links": {
+     *                             "self": {
+     *                                 "href": "http://127.0.0.1:8000/api/products/2"
+     *                             }
+     *                         }
+     *                     }
+     *                 }
+     *             }
+     *         }
      *     )
      * )
      * @OA\Response(
@@ -101,8 +179,29 @@ class ProductController extends AbstractFOSRestController
      * )
      * @OA\Response(
      *     response=401,
-     *     description="Unauthorized : user isn't connected"
-     * )
+     *     description="Forbidden : JWT token is expired / not found",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="The response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="The response message"
+     *                 ),
+     *                 example={
+     *                     "code": 401,
+     *                     "message": "JWT Token not found",
+     *                 }
+     *             )
+     *         )
+     *     }
+     *  )
      * @IsGranted("PRODUCTS_LIST")
      */
     public function showList(ParamFetcherInterface $paramFetcher): PaginatedRepresentation
