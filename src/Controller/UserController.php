@@ -141,7 +141,7 @@ class UserController extends AbstractFOSRestController
      *         in="path",
      *         name="id",
      *         @OA\Schema (type="integer"),
-     *         required="true",
+     *         required=true,
      *         description="User id which to get details about",
      *         example=1
      *     ),
@@ -424,7 +424,7 @@ class UserController extends AbstractFOSRestController
      *         in="path",
      *         name="id",
      *         @OA\Schema (type="integer"),
-     *         required="true",
+     *         required=true,
      *         description="User id which to delete",
      *         example=1
      *     ),
