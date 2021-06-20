@@ -14,7 +14,7 @@ class SecurityControllerTest extends BilemoWebTestCase
         return [
             "testAuthenticateGoodCredentials" => [
                 [
-                    "type"           => "DELETE",
+                    "type"           => "POST",
                     "url"            => "/api/login_check",
                     "parameters"     => [],
                     "files"          => [],
@@ -30,7 +30,7 @@ class SecurityControllerTest extends BilemoWebTestCase
             ],
             "testAuthenticateBadCredentials" => [
                 [
-                    "type"           => "DELETE",
+                    "type"           => "POST",
                     "url"            => "/api/login_check",
                     "parameters"     => [],
                     "files"          => [],
