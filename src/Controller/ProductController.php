@@ -37,7 +37,15 @@ class ProductController extends AbstractFOSRestController
      * )
      * @OA\Get (
      *     description="Return informations about phone that correspond to passed id.",
-     *     tags={"Product", "Show", "GET"}
+     *     tags={"Product", "Show", "GET"},
+     *     @OA\Parameter (
+     *         in="path",
+     *         name="id",
+     *         @OA\Schema (type="integer"),
+     *         required=true,
+     *         description="Product id to get details about",
+     *         example=1
+     *     ),
      * )
      *
      * @OA\Response(
@@ -63,12 +71,8 @@ class ProductController extends AbstractFOSRestController
      * )
      *
      * @OA\Response(
-     *     response=404,
-     *     description="Product not found"
-     * )
-     * @OA\Response(
      *     response=401,
-     *     description="Forbidden : JWT token is expired / not found",
+     *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -76,16 +80,42 @@ class ProductController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 401,
      *                     "message": "JWT Token not found",
+     *                 }
+     *             )
+     *         )
+     *     }
+     * )
+     *
+     * @OA\Response(
+     *     response=404,
+     *     description="Product not found. No product correspond to passed id is stored in database",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="Error response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Error response message"
+     *                 ),
+     *                 example={
+     *                     "code": 404,
+     *                     "message": "Not found",
      *                 }
      *             )
      *         )
@@ -176,12 +206,8 @@ class ProductController extends AbstractFOSRestController
      *     )
      * )
      * @OA\Response(
-     *     response=404,
-     *     description="Product not found"
-     * )
-     * @OA\Response(
      *     response=401,
-     *     description="Forbidden : JWT token is expired / not found",
+     *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
      *         @OA\MediaType(
      *             mediaType="application/json",
@@ -189,12 +215,12 @@ class ProductController extends AbstractFOSRestController
      *                 @OA\Property(
      *                     property="code",
      *                     type="integer",
-     *                     description="The response code"
+     *                     description="Error response code"
      *                 ),
      *                 @OA\Property(
      *                     property="message",
      *                     type="string",
-     *                     description="The response message"
+     *                     description="Error response message"
      *                 ),
      *                 example={
      *                     "code": 401,
@@ -203,7 +229,8 @@ class ProductController extends AbstractFOSRestController
      *             )
      *         )
      *     }
-     *  )
+     * )
+     *
      * @IsGranted("PRODUCTS_LIST")
      */
     public function showList(ParamFetcherInterface $paramFetcher): PaginatedRepresentation

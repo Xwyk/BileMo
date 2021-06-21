@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationList;
 use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\Validator\Validation;
 
 class UserController extends AbstractFOSRestController
 {
@@ -83,6 +84,34 @@ class UserController extends AbstractFOSRestController
      *     )
      * )
      * @OA\Response(
+     *     response=400,
+     *     description="Bad request. At least one required parameter vor user creation isn't present or isn't valid",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="property_path",
+     *                     type="string",
+     *                     description="Faulty property"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="Description of error"
+     *                 ),
+     *                 example={{
+     *                     "property_path": "firstName",
+     *                     "message": "This value should not be blank.",
+     *                 },{
+     *                     "property_path": "firstName",
+     *                     "message": "This value should not be null.",
+     *                 }}
+     *             ),
+     *         )
+     *     }
+     * )
+     * @OA\Response(
      *     response=401,
      *     description="Unauthorized : JWT token is expired / not found. Token isn't passed in header, or is exired",
      *     content={
@@ -142,13 +171,13 @@ class UserController extends AbstractFOSRestController
      *         name="id",
      *         @OA\Schema (type="integer"),
      *         required=true,
-     *         description="User id which to get details about",
+     *         description="User id to get details about",
      *         example=1
      *     ),
      * )
      *
      * @OA\Response(
-     *     response=201,
+     *     response=200,
      *     description="Get user details",
      *     content={
      *         @OA\MediaType(
@@ -425,7 +454,7 @@ class UserController extends AbstractFOSRestController
      *         name="id",
      *         @OA\Schema (type="integer"),
      *         required=true,
-     *         description="User id which to delete",
+     *         description="User id to delete",
      *         example=1
      *     ),
      * )
