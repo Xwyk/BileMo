@@ -10,7 +10,7 @@ abstract class BilemoWebTestCase extends WebTestCase implements BilemoWebTestCas
 {
     protected $token;
     protected $tests;
-
+    protected $expiredToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjQwMjkzODMsImV4cCI6MTYyNDAzMjk4Mywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoidXNlcjEifQ.yIawLucJIxmcyRERlV2KlcV05unCBNgTNYt9magM_cw9iBqIXWNqxbOQVyh7sOjmEePbEZgYi1Er9SUOs7H0Oksihy_QT-PvPRq3qn5UIzVsFmDsRKFDhJnI4EpXqttsmflzwRwWfdGGaQGPjjshVWkZNz0M-KbcYb7tzEcxLdMsSSN1HRaEWSgNB9rPzdXQT0oY8el3CW1fnJveQAD5hfs-Mh9HeZmBcx3mIznERbdihynRvz4PviEapwEP7xA8t0CkaOjTJQVLTdms4vTnWpImxn_VCAZO_Su8YB1vT_JsjJQp5Q9GRDDsh7NJYOSdBcwMr0ImOCXI6K96Px4jdA";
     public function entryPoint(string $type, string $url, int $expectedCode, array $parameters = [], array $files = [], array $server = [], string $content = "", bool $needReturnOnOK = false)
     {
         self::ensureKernelShutdown();
