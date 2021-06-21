@@ -1,5 +1,7 @@
 # BileMo
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9d4f000338c94231ab6c1081ef80a87e)](https://www.codacy.com/gh/Xwyk/BileMo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Xwyk/BileMo&amp;utm_campaign=Badge_Grade)
+
 This is the 5th project in PHP/Symfony OpenClassroom training.
 In this project, an API was created to allow authenticated users to access to a list of mobile phones, accessible by all users and a list of sub-users, proper to each authenticated users.
 
