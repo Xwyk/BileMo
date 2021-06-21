@@ -50,6 +50,33 @@ class SecurityController extends AbstractController
      *           )
      *       )
      * )
+     *
+     * @OA\Response(
+     *     response=400,
+     *     description="Bad request : requested properties not found in request body",
+     *     content={
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="code",
+     *                     type="integer",
+     *                     description="The response code"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="message",
+     *                     type="string",
+     *                     description="The response message"
+     *                 ),
+     *                 example={
+     *                     "code": 400,
+     *                     "message": "Bad request",
+     *                 }
+     *             )
+     *         )
+     *     }
+     * )
+     *
      * @OA\Response(
      *     response=401,
      *     description="Invalid credentials",
@@ -75,6 +102,7 @@ class SecurityController extends AbstractController
      *         )
      *     }
      * )
+     *
      * @return JsonResponse
      */
     public function apiLogin(): JsonResponse
