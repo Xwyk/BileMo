@@ -4,7 +4,6 @@
 namespace App\Tests\Controller;
 
 use App\Test\BilemoWebTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends BilemoWebTestCase
