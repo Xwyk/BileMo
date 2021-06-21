@@ -16,13 +16,12 @@ The above application require following environment :
 ## Installation
 
 In this installation guide, it's supposed that you have your environment configured (see requirements)
+
 1.  Download zip and extract it on your server or clone repository from github :
 ```lang-console
 git clone https://github.com/Xwyk/BileMo.git
 ```
-
 2.  Create your .env.local file from .env present in project's root
-
 3.  Install dependancies
 ```lang-console
 composer install
