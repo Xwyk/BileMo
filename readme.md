@@ -20,6 +20,7 @@ In this installation guide, it's supposed that you have your environment configu
 ```lang-console
 git clone https://github.com/Xwyk/BileMo.git
 ```
+
 2.  Create your .env.local file from .env present in project's root
 
 3.  Install dependancies
