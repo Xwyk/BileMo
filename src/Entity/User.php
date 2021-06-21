@@ -10,6 +10,7 @@ use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
@@ -89,16 +90,19 @@ class User
      * @Expose
      * @var Address
      * @OA\Property(description="User's address")
+     * @Assert\Valid(groups={"create"})
      */
     private $address;
 
     /**
      * @Serializer\Type("string")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
      * @var string
      * @OA\Property(description="User's first name", example="Florian")
+     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $firstName;
 
@@ -109,6 +113,7 @@ class User
      * @Expose
      * @var string
      * @OA\Property(description="User's last name", example="LEBOUL")
+     * @Assert\NotBlank(groups={"create"})
      */
     private $lastName;
 
@@ -119,6 +124,9 @@ class User
      * @Expose
      * @var string
      * @OA\Property(description="User's mail address", example="florianleboul@gmail.com")
+     * @Assert\Email (groups={"create"})
+     * @Assert\NotBlank (groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $mailAddress;
 
@@ -129,6 +137,8 @@ class User
      * @Expose
      * @var string
      * @OA\Property(description="User's phone number", example="06 05 41 06 16")
+     * @Assert\NotBlank (groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $phone;
 

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Groups;
 use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AddressRepository::class)
@@ -29,6 +30,7 @@ class Address
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @var int
      * @OA\Property(description="Number of address", example=55)
+     * @Assert\Positive (groups={"create"})
      */
     private $number;
 
@@ -47,6 +49,8 @@ class Address
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @var string
      * @OA\Property(description="Street of address", example="Rue du Faubourg Saint-Honoré")
+     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $street;
 
@@ -56,6 +60,8 @@ class Address
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @var string
      * @OA\Property(description="Postal code of address", example="75008")
+     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $postal;
 
@@ -65,6 +71,8 @@ class Address
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @var string
      * @OA\Property(description="City of residence", example="Paris")
+     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $city;
 
@@ -74,6 +82,8 @@ class Address
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @var string
      * @OA\Property(description="Country of residence", example="France")
+     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotNull(groups={"create"})
      */
     private $country;
 
