@@ -156,6 +156,31 @@
     "namshi/jose": {
         "version": "7.2.3"
     },
+    "nelmio/api-doc-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "c8e0c38e1a280ab9e37587a8fa32b251d5bc1c94"
+        },
+        "files": [
+            "./config/packages/nelmio_api_doc.yaml",
+            "./config/routes/nelmio_api_doc.yaml"
+        ]
+    },
+    "nelmio/cors-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
+        },
+        "files": [
+            "./config/packages/nelmio_cors.yaml"
+        ]
+    },
     "phar-io/manifest": {
         "version": "2.0.1"
     },
@@ -277,6 +302,9 @@
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "symfony/asset": {
+        "version": "v5.2.10"
     },
     "symfony/browser-kit": {
         "version": "v5.2.9"
@@ -477,6 +505,12 @@
     "symfony/security-http": {
         "version": "v5.2.9"
     },
+    "symfony/serializer": {
+        "version": "v5.2.10"
+    },
+    "symfony/serializer-pack": {
+        "version": "v1.0.4"
+    },
     "symfony/service-contracts": {
         "version": "v2.4.0"
     },
@@ -560,5 +594,8 @@
     },
     "willdurand/negotiation": {
         "version": "3.0.0"
+    },
+    "zircote/swagger-php": {
+        "version": "3.2.1"
     }
 }

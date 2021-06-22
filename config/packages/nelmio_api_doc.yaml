@@ -1,0 +1,57 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: BileMo
+            description: BileMo is an API that allows to get mobile phones list/detail for authenticated clients, and client's associated users in JSON format.<br>View code on <a href="https://github.com/Xwyk/bilemo">GitHub</a>
+            version: 1.0.0
+            contact:
+                name: Xwyk
+                email: florianleboul@gmail.com
+            license:
+                name: Apache 2.0
+                url: http://www.apache.org/licenses/LICENSE-2.0.html
+        servers:
+          - url: https://127.0.0.1:443
+            description: Production server define by IP
+          - url: https://localhost:443
+            description: Production server define by name
+        tags:
+            - name: "Authentication"
+              description: "Application authentication"
+            - name: "Create"
+              description: "All about create functions on elements"
+            - name: "Delete"
+              description: "All about delete functions on elements"
+            - name: "DELETE"
+              description: "All about DELETE requests"
+            - name: "GET"
+              description: "All about GET requests"
+            - name: "List"
+              description: "All about list functions on elements"
+            - name: "POST"
+              description: "All about POST requests"
+            - name: "Product"
+              description: "All about products manipulation functions"
+            - name: "User"
+              description: "All about users manipulation functions"
+            - name: "Show"
+              description: "All about show functions on elements"
+        components:
+            securitySchemes:
+                bearerAuth: # arbitrary name for the security scheme
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+        security:
+            - bearerAuth: [ ]
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+    models:
+        names:
+            - { alias: User_Create,        type: App\Entity\User, groups: [create] }
+            - { alias: User,  type: App\Entity\User, groups: [ user_show_detail,Default ] }
+            - { alias: User_List, type: App\Entity\User, groups: [ users_show_client_list,Default ] }
+            - { alias: Address_Create, type: App\Entity\Address, groups: [ create ] }
+            - { alias: Product, type: App\Entity\Product, groups: [ product_show_detail,Default ] }
+            - { alias: Product_List, type: App\Entity\Product, groups: [ products_show_list,Default ] }

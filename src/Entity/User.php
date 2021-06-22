@@ -9,16 +9,22 @@ use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\Groups;
+use OpenApi\Annotations as OA;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
  * @ORM\HasLifecycleCallbacks()
+ * @OA\Schema(
+ *     description="Define client's client. An user is a client of app client (Client class). B2B model",
+ * )
  * @Hateoas\Relation(
  *     "self",
  *     href = @Hateoas\Route(
  *         "app_user_show_details",
- *         parameters = {"userId"="expr(object.getId())"},
+ *         parameters = {"id"="expr(object.getId())"},
  *         absolute = true
  *     ),
  *     exclusion = @Hateoas\Exclusion(groups={"users_show_client_list"})
@@ -28,7 +34,7 @@ use JMS\Serializer\Annotation\Groups;
  *     "delete",
  *     href = @Hateoas\Route(
  *         "app_client_del_user",
- *         parameters = {"userId"="expr(object.getId())"},
+ *         parameters = {"id"="expr(object.getId())"},
  *         absolute = true
  *     ),
  *     exclusion = @Hateoas\Exclusion(groups={"users_show_client_list", "user_show_detail"})
@@ -51,6 +57,8 @@ class User
      * @ORM\Column(type="integer")
      * @Groups({"users_show_client_list"})
      * @Expose
+     * @var int
+     * @OA\Property(description="Unique identifier of User")
      */
     private $id;
 
@@ -59,13 +67,18 @@ class User
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"nodisplay"})
      * @Expose
+     * @var Client
+     * @OA\Property(description="User's client")
      */
     private $client;
 
     /**
+     * @Serializer\Type("DateTime<'Y-m-d', '', ['Y-m-d', 'Y/m/d']>")
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
-     * @Groups({"users_show_client_list", "user_show_detail", "create"})
+     * @Groups({"users_show_client_list", "user_show_detail"})
      * @Expose
+     * @var DateTime
+     * @OA\Property(description="User's creation date", example="2021-06-19T08:37:42+00:00")
      */
     private $createdAt;
 
@@ -75,14 +88,21 @@ class User
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"user_show_detail", "create"})
      * @Expose
+     * @var Address
+     * @OA\Property(description="User's address")
+     * @Assert\Valid(groups={"create"})
      */
     private $address;
 
     /**
      * @Serializer\Type("string")
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's first name", example="Florian")
+     * @Assert\NotBlank(groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $firstName;
 
@@ -91,6 +111,9 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's last name", example="LEBOUL")
+     * @Assert\NotBlank(groups={"create"})
      */
     private $lastName;
 
@@ -99,6 +122,11 @@ class User
      * @ORM\Column(type="string", length=255)
      * @Groups({"user_show_detail", "users_show_client_list", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's mail address", example="florianleboul@gmail.com")
+     * @Assert\Email (groups={"create"})
+     * @Assert\NotBlank (groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $mailAddress;
 
@@ -107,6 +135,10 @@ class User
      * @ORM\Column(type="string", length=20, nullable=true)
      * @Groups({"user_show_detail", "create"})
      * @Expose
+     * @var string
+     * @OA\Property(description="User's phone number", example="06 05 41 06 16")
+     * @Assert\NotBlank (groups={"create"})
+     * @Assert\NotNull (groups={"create"})
      */
     private $phone;
 

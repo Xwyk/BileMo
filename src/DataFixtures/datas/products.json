@@ -1,6 +1,16 @@
 [
   {
     "brand": "Huawei",
+    "commercial_name": "P20 Lite",
+    "model": "Ane-LX1",
+    "rom": 64,
+    "ram": 4,
+    "battery": 3000,
+    "launched_at": "2021-05-27",
+    "price": 199
+  },
+  {
+    "brand": "Huawei",
     "commercial_name": "b",
     "model": "b",
     "rom": 12,

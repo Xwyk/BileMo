@@ -9,9 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\NotNull;
+use OpenApi\Annotations as OA;
 
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
@@ -19,6 +23,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
  * @UniqueEntity(
  *     fields={"siren, siret, tva"},
  * )
+ * @OA\Schema (description="Direct client of application. Allow to view/create/delete users and view products")
  */
 class Client implements UserInterface
 {
@@ -27,6 +32,8 @@ class Client implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Expose
+     * @var in
+     * @OA\Property(description="Unique identifier of Client")
      */
     private $id;
 
@@ -34,6 +41,8 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=32)
      * @Expose
+     * @var string
+     * @OA\Property(description="Clients's name", example="1979")
      */
     private $name;
 
@@ -41,13 +50,17 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Expose
+     * @var string
+     * @OA\Property(description="Clients's Description", example="1979, société par actions simplifiée est active depuis 41 ans. Localisée à PARIS (75016), elle est spécialisée dans le secteur d'activité de l'edition et distribution vidéo. Son effectif est compris entre 50 et 99 salariés. Sur l'année 2019 elle réalise un chiffre d'affaires de 20 029 000,00 €. Le total du bilan a augmenté de 9,82 % entre 2018 et 2019. Societe.com recense 6 établissements et le dernier événement notable de cette entreprise date du 20-05-2020. Gregory DORCEL, est président de la société 1979.")
      */
     private $description;
 
     /**
-     * @Serializer\Type("DateTime")
+     * @Serializer\Type("DateTime<'Y-m-d', '', ['Y-m-d', 'Y/m/d']>")
      * @ORM\Column(type="datetime")
      * @Expose
+     * @var DateTime
+     * @OA\Property(description="Clients's creation date (not in database)", example="1979-01-01")
      */
     private $createdAt;
 
@@ -55,6 +68,8 @@ class Client implements UserInterface
      * @Serializer\Type("array<App\Entity\User>")
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="client", orphanRemoval=true, cascade={"persist"})
      * @Expose
+     * @var Collection
+     * @OA\Property(description="Client's users list")
      */
     private $users;
 
@@ -62,6 +77,8 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", unique=true, length=255)
      * @Expose
+     * @var string
+     * @OA\Property(description="Client's username")
      */
     private $username;
 
@@ -69,6 +86,8 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=255)
      * @Expose
+     * @var string
+     * @OA\Property(description="Client's password")
      */
     private $password;
 
@@ -77,6 +96,8 @@ class Client implements UserInterface
      * @ORM\ManyToOne(targetEntity=Address::class, cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Expose
+     * @var Address
+     * @OA\Property(description="Client's address")
      */
     private $address;
 
@@ -84,6 +105,8 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=14)
      * @Expose
+     * @var string
+     * @OA\Property(description="Client's siret", example="31638830500062")
      */
     private $siret;
 
@@ -91,6 +114,8 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=9)
      * @Expose
+     * @var string
+     * @OA\Property(description="Client's siret", example="316388305")
      */
     private $siren;
 
@@ -98,6 +123,8 @@ class Client implements UserInterface
      * @Serializer\Type("string")
      * @ORM\Column(type="string", length=13)
      * @Expose
+     * @var string
+     * @OA\Property(description="Client's siret", example="FR42316388305")
      */
     private $tva;
 

@@ -4,7 +4,6 @@
 namespace App\Tests\Controller;
 
 use App\Test\BilemoWebTestCase;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
 class SecurityControllerTest extends BilemoWebTestCase
@@ -14,7 +13,7 @@ class SecurityControllerTest extends BilemoWebTestCase
         return [
             "testAuthenticateGoodCredentials" => [
                 [
-                    "type"           => "DELETE",
+                    "type"           => "POST",
                     "url"            => "/api/login_check",
                     "parameters"     => [],
                     "files"          => [],
@@ -28,9 +27,24 @@ class SecurityControllerTest extends BilemoWebTestCase
                     "needReturnOnOK" => false
                 ]
             ],
+            "testAuthenticateBadRequest" => [
+                [
+                    "type"           => "POST",
+                    "url"            => "/api/login_check",
+                    "parameters"     => [],
+                    "files"          => [],
+                    "server"         => [],
+                    "authenticated"  => false,
+                    "content"        => json_encode([
+                        "username" => "user1",
+                    ]),
+                    "expectedCode"   => Response::HTTP_BAD_REQUEST,
+                    "needReturnOnOK" => false
+                ]
+            ],
             "testAuthenticateBadCredentials" => [
                 [
-                    "type"           => "DELETE",
+                    "type"           => "POST",
                     "url"            => "/api/login_check",
                     "parameters"     => [],
                     "files"          => [],

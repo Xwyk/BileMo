@@ -20,3 +20,5 @@ fos_rest:
       custom_header:
         enabled: true
         header_name: X-Accept-Version
+  exception:
+    enabled: false

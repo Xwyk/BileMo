@@ -12,31 +12,18 @@ class ProductControllerTest extends BilemoWebTestCase
     protected $firstProductId = 1;
     protected $firstProduct = [
         "brand"           => "Huawei",
-        "commercial_name" => "b",
-        "model"           => "b",
-        "rom"             => 12,
-        "ram"             => 12,
-        "battery"         => 12,
+        "commercial_name" => "P20 Lite",
+        "model"           => "Ane-LX1",
+        "rom"             => 64,
+        "ram"             => 4,
+        "battery"         => 3000,
         "launched_at"     => "2021-05-27",
-        "price"          => 200
+        "price"           => 199
     ];
     public function loadEntryPoints(): array
     {
         return [
-            "testShowDetailsUnauthenticated" => [
-                [
-                    "type" => "GET",
-                    "url" => "/api/products/" . $this->firstProductId,
-                    "parameters" => [],
-                    "files" => [],
-                    "server" => [],
-                    "authenticated" => false,
-                    "content" => "",
-                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
-                    "needReturnOnOK" => false
-                ]
-            ],
-            "testShowDetailsAuthenticated" => [
+            "testShowDetailsTokenOkIdOk" => [
                 [
                     "type" => "GET",
                     "url" => "/api/products/" . $this->firstProductId,
@@ -47,10 +34,88 @@ class ProductControllerTest extends BilemoWebTestCase
                     "content" => "",
                     "expectedCode" => Response::HTTP_OK,
                     "needReturnOnOK" => true,
-                    "additionalCheck" => "checkShowDetailsAuthenticated"
+                    "additionalCheck" => "checkShowDetailsTokenOkIdOk"
                 ]
             ],
-            "testShowListUnauthenticated" => [
+            "testShowDetailsTokenOkIdKo" => [
+                [
+                    "type" => "GET",
+                    "url" => "/api/products/1000",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => true,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_NOT_FOUND,
+                    "needReturnOnOK" => false,
+                ]
+            ],
+            "testShowDetailsTokenKoIdOk" => [
+                [
+                    "type" => "GET",
+                    "url" => "/api/products/" . $this->firstProductId,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => ["HTTP_AUTHORIZATION" => $this->expiredToken],
+                    "authenticated" => false,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false,
+                ]
+            ],
+            "testShowDetailsTokenKoIdKo" => [
+                [
+                    "type" => "GET",
+                    "url" => "/api/products/1000",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => ["HTTP_AUTHORIZATION" => $this->expiredToken],
+                    "authenticated" => false,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false,
+                ]
+            ],
+            "testShowDetailsNoTokenIdOk" => [
+                [
+                    "type" => "GET",
+                    "url" => "/api/products/" . $this->firstProductId,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => false,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false,
+                ]
+            ],
+            "testShowDetailsNoTokenIdKo" => [
+                [
+                    "type" => "GET",
+                    "url" => "/api/products/" . $this->firstProductId,
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => [],
+                    "authenticated" => false,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false,
+                ]
+            ],
+            "testShowListTokenKo" => [
+                [
+                    "type" => "GET",
+                    "url" => "/api/products",
+                    "parameters" => [],
+                    "files" => [],
+                    "server" => ["HTTP_AUTHORIZATION" => $this->expiredToken],
+                    "authenticated" => false,
+                    "content" => "",
+                    "expectedCode" => Response::HTTP_UNAUTHORIZED,
+                    "needReturnOnOK" => false
+                ]
+            ],
+            "testShowListNoToken" => [
                 [
                     "type" => "GET",
                     "url" => "/api/products",
@@ -63,7 +128,7 @@ class ProductControllerTest extends BilemoWebTestCase
                     "needReturnOnOK" => false
                 ]
             ],
-            "testShowListAuthenticated" => [
+            "testShowListTokenOk" => [
                 [
                     "type" => "GET",
                     "url" => "/api/products",
@@ -74,7 +139,7 @@ class ProductControllerTest extends BilemoWebTestCase
                     "content" => "",
                     "expectedCode" => Response::HTTP_OK,
                     "needReturnOnOK" => true,
-                    "additionalCheck" => "checkShowListAuthenticated"
+                    "additionalCheck" => "checkShowListTokenOk"
                 ]
             ]
         ];
@@ -84,7 +149,7 @@ class ProductControllerTest extends BilemoWebTestCase
      * Checks first user in list correspond to firs user data defined in class and check _links on each user displayed
      * @param $result
      */
-    protected function checkShowListAuthenticated($result){
+    protected function checkShowListTokenOk($result){
 
         $productsList = $result->_embedded->items;
 
@@ -104,7 +169,7 @@ class ProductControllerTest extends BilemoWebTestCase
      * Checks if returned user (id defined in class) correspond to data (defined in class) and check _links content
      * @param $result
      */
-    protected function checkShowDetailsAuthenticated($result){
+    protected function checkShowDetailsTokenOkIdOk($result){
         $this->checkAttributes(
             (json_decode(json_encode($result), true)),
             (json_decode(json_encode($this->firstProduct), true))
