@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Hateoas\Representation\PaginatedRepresentation;
 use Hateoas\Representation\CollectionRepresentation;
@@ -15,7 +16,7 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use OpenApi\Annotations\Schema;
 use Nelmio\ApiDocBundle\Annotation as Doc;
-
+use Symfony\Contracts\Cache\CacheInterface;
 
 
 /**
@@ -122,8 +123,9 @@ class ProductController extends AbstractFOSRestController
      *     }
      * )
      * @IsGranted("PRODUCT_SHOW")
+     * @Cache(expires="+2 days", public=true)
      */
-    public function showDetails(Product $product): Product
+    public function showDetails(Product $product, CacheInterface $cache): Product
     {
         return $product;
     }
