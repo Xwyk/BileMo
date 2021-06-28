@@ -123,7 +123,12 @@ class ProductController extends AbstractFOSRestController
      *     }
      * )
      * @IsGranted("PRODUCT_SHOW")
-     * @Cache(expires="+2 days", public=true)
+     * @Cache(
+     *     expires="1 hour",
+     *     maxage="3600",
+     *     public=true,
+     *     vary={"Authorization"},
+     * )
      */
     public function showDetails(Product $product, CacheInterface $cache): Product
     {
@@ -234,11 +239,16 @@ class ProductController extends AbstractFOSRestController
      * )
      *
      * @IsGranted("PRODUCTS_LIST")
+     *
+     * @Cache(
+     *     expires="1 hour",
+     *     maxage="3600",
+     *     public=true,
+     *     vary={"Authorization"},
+     * )
      */
     public function showList(ParamFetcherInterface $paramFetcher): PaginatedRepresentation
     {
-        // Values used for paginated collection
-
         // Actual page
         $page = $paramFetcher->get("page");
         // Elements by page
