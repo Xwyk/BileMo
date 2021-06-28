@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Hateoas\Representation\PaginatedRepresentation;
 use Hateoas\Representation\CollectionRepresentation;
@@ -122,6 +123,12 @@ class ProductController extends AbstractFOSRestController
      *     }
      * )
      * @IsGranted("PRODUCT_SHOW")
+     * @Cache(
+     *     expires="tomorrow",
+     *     maxage="3600",
+     *     public=true,
+     *     mustRevalidate=true
+     * )
      */
     public function showDetails(Product $product): Product
     {
