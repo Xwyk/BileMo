@@ -6,9 +6,11 @@ left to right direction
 Client    <<operator>> as client
 
 rectangle "Authentication" {
-  (Authenticate) as auth
+  (Authenticate with Token) as auth
+  (Get JWT Token) as getToken
 }
 
 client --> auth
+client --> getToken
 
 @enduml
