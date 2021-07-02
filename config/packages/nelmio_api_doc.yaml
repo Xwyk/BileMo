@@ -49,8 +49,8 @@ nelmio_api_doc:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
     models:
         names:
-            - { alias: User_Create,        type: App\Entity\User, groups: [create] }
-            - { alias: User,  type: App\Entity\User, groups: [ user_show_detail,Default ] }
+            - { alias: User_Create, type: App\Entity\User, groups: [create]}
+            - { alias: User, type: App\Entity\User, groups: [ user_show_detail,Default ] }
             - { alias: User_List, type: App\Entity\User, groups: [ users_show_client_list,Default ] }
             - { alias: Address_Create, type: App\Entity\Address, groups: [ create ] }
             - { alias: Product, type: App\Entity\Product, groups: [ product_show_detail,Default ] }
