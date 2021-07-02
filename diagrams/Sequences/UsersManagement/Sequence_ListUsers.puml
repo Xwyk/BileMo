@@ -7,8 +7,8 @@ actor "Authenticated client" as client
 actor System                as system
 actor Database              as db
 
-client  -> system  : send HTTP GET /clients/{id}/users
-system -> db      : request for users list
+client  -> system  : send HTTP GET /api/users
+system -> db      : request for client's users list
 system <-- db     : return data
 client  <-- system : return clients list in JSON
 
