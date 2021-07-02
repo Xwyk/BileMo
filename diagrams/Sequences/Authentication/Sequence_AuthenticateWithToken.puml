@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Client" as client
+actor System                as system
+
+client  -> system  : send HTTP request with Authorization header
+system  -> system  : Check token validity
+alt if token is valid
+system  -> system  : Treat users request
+client  <-- system : return result
+else
+client  <-- system : return 401
+end
+@enduml

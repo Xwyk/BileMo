@@ -7,16 +7,21 @@ actor "Authenticated client" as client
 actor System                as system
 actor Database              as db
 
-client  -> system  : send HTTP DEL /clients/{clientId}/users/{userId}
-system -> db      : get User object from {userId}
-system <-- db     : return data
-
+client  -> system  : send HTTP DELETE /api/users/{id}
+system  -> db  : request for user
+system  <-- db  : return response
 alt User exists
-  system -> db      : delete User object
-  system <-- db     : return status code
-  client  <-- system : return 200 status code
+  system  -> system  : Check if User belong to Client
+  alt User belong to Client
+    system -> db      : delete User object
+    system <-- db     : return status code
+    client  <-- system : return 200 status code
+  else User doesn't exists
+    client  <-- system : return 403 status code
+  end
 else User doesn't exists
   client  <-- system : return 404 status code
 end
+
 
 @enduml

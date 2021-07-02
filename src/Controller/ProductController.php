@@ -16,7 +16,7 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use OpenApi\Annotations\Schema;
 use Nelmio\ApiDocBundle\Annotation as Doc;
-
+use Symfony\Contracts\Cache\CacheInterface;
 
 
 /**
@@ -124,13 +124,13 @@ class ProductController extends AbstractFOSRestController
      * )
      * @IsGranted("PRODUCT_SHOW")
      * @Cache(
-     *     expires="tomorrow",
+     *     expires="1 hour",
      *     maxage="3600",
      *     public=true,
-     *     mustRevalidate=true
+     *     vary={"Authorization"},
      * )
      */
-    public function showDetails(Product $product): Product
+    public function showDetails(Product $product, CacheInterface $cache): Product
     {
         return $product;
     }
@@ -239,11 +239,16 @@ class ProductController extends AbstractFOSRestController
      * )
      *
      * @IsGranted("PRODUCTS_LIST")
+     *
+     * @Cache(
+     *     expires="1 hour",
+     *     maxage="3600",
+     *     public=true,
+     *     vary={"Authorization"},
+     * )
      */
     public function showList(ParamFetcherInterface $paramFetcher): PaginatedRepresentation
     {
-        // Values used for paginated collection
-
         // Actual page
         $page = $paramFetcher->get("page");
         // Elements by page

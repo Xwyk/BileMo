@@ -11,6 +11,7 @@ use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
 use Hateoas\Representation\CollectionRepresentation;
 use Hateoas\Representation\PaginatedRepresentation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -289,6 +290,14 @@ class UserController extends AbstractFOSRestController
      * )
      *
      * @IsGranted("USER_SHOW", subject="user")
+     *
+     * @Cache(
+     *     expires="1 hour",
+     *     maxage="3600",
+     *     public=true,
+     *     vary={"Authorization"},
+     * )
+     *
      */
     public function showDetails(User $user): User
     {

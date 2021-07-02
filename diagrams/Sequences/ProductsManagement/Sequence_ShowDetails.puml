@@ -3,18 +3,18 @@
 
 autonumber
 
-actor "Authenticated user" as user
+actor "Authenticated client" as client
 actor System                as system
 actor Database              as db
 
-user  -> system  : send HTTP GET /products/{id}
+client  -> system  : send HTTP GET /api/prodcuts/{id}
 system -> db      : request for Product object from {id}
 system <-- db     : return data
 
 alt Product exists
-  user  <-- system : return product's details in JSON
+      client  <-- system : return product's details in JSON
 else Product doesn't exists
-  user  <-- system : return 404 status code
+  client  <-- system : return 404 status code
 end
 
 @enduml

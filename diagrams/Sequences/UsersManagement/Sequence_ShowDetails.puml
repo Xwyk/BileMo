@@ -7,12 +7,16 @@ actor "Authenticated client" as client
 actor System                as system
 actor Database              as db
 
-client  -> system  : send HTTP GET /clients/{clientId}/users/{userId}
-system -> db      : request for User object from {userId}
+client  -> system  : send HTTP GET /api/users/{id}
+system -> db      : request for User object from {id}
 system <-- db     : return data
 
 alt User exists
-  client  <-- system : return client's details in JSON
+    alt User belong to CLient
+      client  <-- system : return client's details in JSON
+    else User doesn't belong to Client
+      client  <-- system : return 403 status code
+    end
 else User doesn't exists
   client  <-- system : return 404 status code
 end

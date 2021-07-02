@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Client" as client
+actor System                as system
+actor Database              as db
+
+client  -> system  : send HTTP POST /api/login_check
+system -> db      : request db for client
+system <-- db     : return data
+alt Login informations == ok
+client  <-- system : return JWT Token to client
+else
+client  <-- system : return 401
+end
+@enduml
