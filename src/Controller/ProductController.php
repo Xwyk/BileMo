@@ -130,7 +130,7 @@ class ProductController extends AbstractFOSRestController
      *     vary={"Authorization"},
      * )
      */
-    public function showDetails(Product $product, CacheInterface $cache): Product
+    public function showDetails(Product $product): Product
     {
         return $product;
     }
